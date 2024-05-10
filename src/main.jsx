@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
 import AuthProvider from "./components/AuthProvider/AuthProvider.jsx";
+import PrivateRoute from "./components/AuthProvider/PrivateRoute.jsx";
 import "./index.css";
 import AboutUs from "./pages/AboutUs/AboutUs.jsx";
 import Home from "./pages/Home/Home.jsx";
@@ -34,7 +35,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/mybookings",
-        element: <MyBookings></MyBookings>,
+        element: (
+          <PrivateRoute>
+            <MyBookings></MyBookings>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/aboutus",
