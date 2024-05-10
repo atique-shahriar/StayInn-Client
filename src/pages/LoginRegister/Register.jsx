@@ -1,39 +1,39 @@
-import { GoogleAuthProvider } from "firebase/auth";
 import { useContext } from "react";
-import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../components/AuthProvider/AuthProvider";
 
-const Login = () => {
-  const {signInUser, signInGoogle} = useContext(AuthContext);
-  const handleSignIn = (e) => {
+const Register = () => {
+  const {createUser} = useContext(AuthContext);
+
+  const handleRegisterInfo = (e) => {
     e.preventDefault();
+    // const name = e.target.name.value;
+    // const photoUrl = e.target.photoUrl.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-    const user = {email, password};
-    console.log(user);
+    // const user = {name, photoUrl, email, password};
+    // console.log(user);
 
-    signInUser(email, password)
-      .then((result) => {
-        console.log(result.user);
-        toast.success("Logged in successfully");
+    if (password.length < 6) {
+      toast.error("Password should be at least 6 characters");
+      return;
+    }
+
+    const passCheck = /^(?=.*[a-z])(?=.*[A-Z])/;
+    if (!passCheck.test(password)) {
+      toast.error("Password should be at least one upper and lower case");
+      return;
+    }
+
+    createUser(email, password)
+      .then((res) => {
+        toast.success("Successfully Registered");
+        console.log(res.user);
       })
       .catch((error) => {
+        toast.error("Error Occured");
         console.log(error.message);
-        toast.error("Wrong email or password");
-      });
-  };
-
-  const handleGoogleSignIn = () => {
-    const googleProvider = new GoogleAuthProvider();
-    signInGoogle(googleProvider)
-      .then((result) => {
-        console.log("Login with google", result.user);
-        toast.success("Logged in successfully with google");
-      })
-      .catch((error) => {
-        console.log("Login with google  failed", error.message);
       });
   };
 
@@ -47,10 +47,30 @@ const Login = () => {
         </div>
         <div className=" border-2 border-gray-200 rounded-lg py-8 px-6 h-fit">
           <h3 className="text-3xl font-bold text-[#199DFF] text-center mb-6">
-            Login
+            Register
           </h3>
           <div>
-            <form className="space-y-4" onSubmit={handleSignIn}>
+            <form className="space-y-4" onSubmit={handleRegisterInfo}>
+              <div className="space-y-2">
+                <label>Name</label>
+                <input
+                  type="text"
+                  placeholder="Type Name"
+                  name="name"
+                  className="w-full border rounded-md border-black px-2 py-2"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <label>Photo Url</label>
+                <input
+                  type="text"
+                  placeholder="Type Photo Url"
+                  name="photoUrl"
+                  className="w-full border rounded-md border-black px-2 py-2"
+                  required
+                />
+              </div>
               <div className="space-y-2">
                 <label>Email</label>
                 <input
@@ -74,23 +94,17 @@ const Login = () => {
               <div className="pt-4">
                 <input
                   type="submit"
-                  value="Login"
+                  value="Register"
                   className="w-full border rounded-md bg-gradient-to-l from-[#3263FF] to-[#57b6ff] hover:bg-gradient-to-r text-lg hover:border hover:border-[#3263FF] text-white font-semibold px-2 py-2"
                 />
               </div>
             </form>
           </div>
           <div className="space-y-4 mt-4 text-center">
-            <p>Or login with</p>
-            <div className="flex justify-center items-center gap-6 text-5xl hover:cursor-pointer">
-              <FcGoogle onClick={handleGoogleSignIn}></FcGoogle>
-            </div>
-            <p>
-              Don&apos;t have an account?{" "}
-              <Link to="/register" className="hover:text-[#FF3811]">
-                Create Account.
-              </Link>
-            </p>
+            Have&apos;t any account?{" "}
+            <Link to="/login" className="hover:text-[#FF3811]">
+              Login account.
+            </Link>
           </div>
         </div>
       </div>
@@ -98,4 +112,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
