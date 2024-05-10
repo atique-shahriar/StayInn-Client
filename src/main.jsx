@@ -5,6 +5,7 @@ import App from "./App.jsx";
 import "./index.css";
 import AboutUs from "./pages/AboutUs/AboutUs.jsx";
 import Home from "./pages/Home/Home.jsx";
+import Login from "./pages/LoginRegister/Login.jsx";
 import MyBookings from "./pages/MyBookings/MyBookings.jsx";
 import Rooms from "./pages/Rooms/Rooms.jsx";
 
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+      },
+      {
+        path: "/login",
+        element: <Login></Login>,
       },
       {
         path: "/rooms",
