@@ -1,7 +1,18 @@
+import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
 import "../../index.css";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Navbar = () => {
+  const {user, signOutUser} = useContext(AuthContext);
+  console.log(user);
+
+  const handleSignOut = () => {
+    signOutUser();
+    toast.success("Signout Successfully");
+  };
+
   const navItems = (
     <>
       <li>
@@ -122,9 +133,54 @@ const Navbar = () => {
           <ul className="flex gap-6 text-base font-semibold">{navItems}</ul>
         </div>
         <div className="flex items-center gap-6 text-base">
-          <button className="border-2 border-black rounded-lg px-6 py-2 font-semibold hover:text-[#FF7B19] hover:border-[#FF7B19]">
-            <Link to="/login">Login</Link>
-          </button>
+          {user ? (
+            <div>
+              <div>
+                {user.photoURL ? (
+                  <div className="flex items-center gap-4">
+                    <img
+                      src={user.photoURL}
+                      className="rounded-[100%] w-12"
+                      alt="Photo"
+                      title={user.displayName}
+                    />
+                    <Link
+                      to="/login"
+                      onClick={handleSignOut}
+                      className="border-2 border-black rounded-lg px-6 py-2 font-semibold hover:text-[#FF7B19] hover:border-[#FF7B19]"
+                    >
+                      Logout
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-4">
+                    <img
+                      src="https://www.freeiconspng.com/uploads/am-a-19-year-old-multimedia-artist-student-from-manila--21.png"
+                      className="rounded-[100%] w-12"
+                      alt=""
+                    />
+
+                    <Link
+                      to="/login"
+                      onClick={handleSignOut}
+                      className="border-2 border-black rounded-lg px-6 py-2 font-semibold hover:text-[#FF7B19] hover:border-[#FF7B19]"
+                    >
+                      Logout
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div>
+              <Link
+                to="/login"
+                className="border-2 border-black rounded-lg px-6 py-2 font-semibold hover:text-[#FF7B19] hover:border-[#FF7B19]"
+              >
+                Login
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>
