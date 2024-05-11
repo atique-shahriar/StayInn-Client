@@ -10,6 +10,7 @@ import Home from "./pages/Home/Home.jsx";
 import Login from "./pages/LoginRegister/Login.jsx";
 import Register from "./pages/LoginRegister/Register.jsx";
 import MyBookings from "./pages/MyBookings/MyBookings.jsx";
+import RoomDetails from "./pages/Rooms/RoomDetails.jsx";
 import Rooms from "./pages/Rooms/Rooms.jsx";
 
 const router = createBrowserRouter([
@@ -32,7 +33,14 @@ const router = createBrowserRouter([
       {
         path: "/rooms",
         element: <Rooms></Rooms>,
+        loader: () => fetch("http://localhost:5000/roomsAvailable"),
       },
+      {
+        path: "/roomdetails/:id",
+        element: <RoomDetails></RoomDetails>,
+        loader: ({params}) => fetch(`http://localhost:5000/room/${params.id}`),
+      },
+
       {
         path: "/mybookings",
         element: (

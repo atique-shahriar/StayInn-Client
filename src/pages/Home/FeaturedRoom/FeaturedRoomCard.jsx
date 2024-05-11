@@ -50,7 +50,7 @@ const FeaturedRoomCard = ({room}) => {
 };
 
 FeaturedRoomCard.propTypes = {
-  room: PropTypes.array,
+  room: PropTypes.object,
 };
 
 export default FeaturedRoomCard;
