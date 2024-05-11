@@ -7,13 +7,13 @@ const Rooms = () => {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/roomsAvailable/${""}`).then((res) => {
+    axios.get(`http://localhost:5000/roomsAvailable/${"all"}`).then((res) => {
       setRooms(res.data);
       console.log(res.data);
     });
   }, []);
 
-  const handlePriceSort = (e) => {
+  const handlePriceFilter = (e) => {
     const selected = e.target.value;
     console.log(selected);
     if (selected) {
@@ -40,14 +40,17 @@ const Rooms = () => {
       <div className="flex justify-center md:justify-end py-2">
         <select
           className="select w-full max-w-44 border select-bordered "
-          onChange={handlePriceSort}
+          onChange={handlePriceFilter}
           defaultValue={"default"}
         >
           <option disabled value="default">
             Sorted By?
           </option>
-          <option value="ascending">Price: Low to High</option>
-          <option value="descending">Price: High to Low</option>
+          <option value="0-25">Price: $0 - $25</option>
+          <option value="26-50">Price: $26 - $50</option>
+          <option value="51-75">Price: $51 - $75</option>
+          <option value="76-100">Price: $76 - $100</option>
+          <option value="101">Price: &gt;$100</option>
         </select>
       </div>
       <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-8">

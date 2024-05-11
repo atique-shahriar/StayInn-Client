@@ -39,7 +39,7 @@ const FeaturedRoomCard = ({room}) => {
 
       <div className="flex justify-center mt-4">
         <Link
-          to={`/rooms/${_id}`}
+          to={`/roomdetails/${_id}`}
           className="bg-gradient-to-br from-[#FF7B19] to-[#FFCE32] hover:bg-gradient-to-bl w-2/4 py-2 rounded-xl font-bold text-white text-center"
         >
           Book Now

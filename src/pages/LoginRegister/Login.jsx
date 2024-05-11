@@ -1,3 +1,4 @@
+import axios from "axios";
 import { GoogleAuthProvider } from "firebase/auth";
 import { useContext } from "react";
 import { FcGoogle } from "react-icons/fc";
@@ -31,6 +32,15 @@ const Login = () => {
       .then((result) => {
         console.log("Login with google", result.user);
         toast.success("Logged in successfully with google");
+        const userName = result.user.displayName;
+        const userEmail = result.user.email;
+        const userPhoto = result.user.photoURL;
+
+        const user = {userName, userEmail, userPhoto};
+
+        axios.post("http://localhost:5000/users", user).then((res) => {
+          console.log(res.data);
+        });
       })
       .catch((error) => {
         console.log("Login with google  failed", error.message);

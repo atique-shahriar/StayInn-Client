@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -8,8 +9,8 @@ const Register = () => {
 
   const handleRegisterInfo = (e) => {
     e.preventDefault();
-    // const name = e.target.name.value;
-    // const photoUrl = e.target.photoUrl.value;
+    const name = e.target.name.value;
+    const photoUrl = e.target.photoUrl.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
     // const user = {name, photoUrl, email, password};
@@ -30,6 +31,11 @@ const Register = () => {
       .then((res) => {
         toast.success("Successfully Registered");
         console.log(res.user);
+
+        const user = {name, email, photoUrl};
+        axios.post("http://localhost:5000/users", user).then((res) => {
+          console.log(res.data);
+        });
       })
       .catch((error) => {
         toast.error("Error Occured");
