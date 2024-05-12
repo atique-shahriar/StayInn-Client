@@ -2,11 +2,14 @@ import axios from "axios";
 import { PropTypes } from "prop-types";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
+import { toast } from "react-toastify";
 
 const UpdateModal = ({updateBook}) => {
   const [startDate, setStartDate] = useState(new Date());
 
-  const handleUpdateDate = (id) => {
+  const handleUpdateDate = (e) => {
+    e.preventDefault();
+    const id = updateBook._id;
     const date = startDate.toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
@@ -14,12 +17,19 @@ const UpdateModal = ({updateBook}) => {
     });
     axios.put(`http://localhost:5000/bookedRooms/${id}`, {date}).then((res) => {
       console.log(res.data);
+      toast.success("Date Updated successfully");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     });
   };
 
   return (
     <div className="modal-box">
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <form
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        onSubmit={handleUpdateDate}
+      >
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Name
@@ -88,7 +98,6 @@ const UpdateModal = ({updateBook}) => {
             className="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
             value="Update"
-            onClick={() => handleUpdateDate(updateBook?._id)}
           />
         </div>
       </form>

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { PropTypes } from "prop-types";
+import { toast } from "react-toastify";
 
 const RatingModal = ({ratingBook}) => {
   const handleReviewSubmit = (e) => {
@@ -9,7 +10,7 @@ const RatingModal = ({ratingBook}) => {
     const roomType = ratingBook.roomType;
     const price = ratingBook.price;
     const comment = e.target.comment.value;
-    const ratings = e.target.ratings.value;
+    const ratings = parseInt(e.target.ratings.value);
     const currTime = new Date().toLocaleTimeString();
     const bookedInfo = {
       roomId,
@@ -21,9 +22,16 @@ const RatingModal = ({ratingBook}) => {
       currTime,
     };
     console.log(bookedInfo);
-    axios
-      .post("http://localhost:5000/ratings", bookedInfo)
-      .then((res) => console.log(res.data));
+    axios.post("http://localhost:5000/ratings", bookedInfo).then((res) => {
+      console.log(res.data);
+      axios
+        .put(`http://localhost:5000/rooms/${roomId}`, {bookedInfo})
+        .then((res) => console.log(res.data));
+    });
+    toast.success("Review added successfully");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   };
 
   return (

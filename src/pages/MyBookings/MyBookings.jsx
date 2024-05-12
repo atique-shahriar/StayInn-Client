@@ -59,24 +59,23 @@ const MyBookings = () => {
 
   const handleUpdateDate = (bookInfo) => {
     setUpdateBook(bookInfo);
-    document.getElementById("my_modal_1").showModal();
-    document.getElementById("my_modal_1").closeModal();
+    document.getElementById("updateDateModal").showModal();
   };
 
   const handleReview = (bookInfo) => {
     setRatingBook(bookInfo);
-    document.getElementById("my_modal_2").showModal();
+    document.getElementById("ratingModal").showModal();
   };
 
   return (
     <div className="shadow-lg mb-1">
       {/* For updating date */}
-      <dialog id="my_modal_1" className="modal">
+      <dialog id="updateDateModal" className="modal">
         <UpdateModal updateBook={updateBook}></UpdateModal>
       </dialog>
 
       {/* For give ratings */}
-      <dialog id="my_modal_2" className="modal">
+      <dialog id="ratingModal" className="modal">
         <RatingModal ratingBook={ratingBook}></RatingModal>
       </dialog>
 

@@ -1,8 +1,18 @@
+import axios from "axios";
 import { PropTypes } from "prop-types";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const RoomCard = ({room}) => {
   const {_id, image, price_per_night} = room;
+  const [roomInfo, setRoomInfo] = useState();
+
+  useState(() => {
+    axios.get(`http://localhost:5000/room/${_id}`).then((res) => {
+      setRoomInfo(res.data);
+    });
+  }, []);
+
   return (
     <div className="p-4 border border-[#F6BC1C] rounded-lg">
       <Link to={`/roomdetails/${_id}`}>
@@ -19,6 +29,9 @@ const RoomCard = ({room}) => {
             ${price_per_night}
             <span className="text-sm">/night</span>
           </span>
+          <p className="font-bold text-base text-[#FF7B19]">
+            Review: {roomInfo?.reviews?.length}
+          </p>
         </div>
       </Link>
     </div>
