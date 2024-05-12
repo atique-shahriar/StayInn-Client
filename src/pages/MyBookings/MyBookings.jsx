@@ -39,7 +39,7 @@ const MyBookings = () => {
     });
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id, roomId) => {
     Swal.fire({
       title: "Are you sure to delete this one?",
       text: "You won't be able to revert this!",
@@ -50,13 +50,18 @@ const MyBookings = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete("http://localhost:5000/bookedRooms").then((res) => {
+        axios.delete(`http://localhost:5000/bookedRooms/${id}`).then((res) => {
           console.log(res.data);
           if (res.data.deletedCount > 0) {
+            console.log(roomId);
+            axios.put(`http://localhost:5000/room/${roomId}`, {isAvailable: true}).then((res) => {
+              console.log(res.data);
+            });
+
             console.log("Deleted Successfully");
             Swal.fire({
               title: "Deleted!",
-              text: "Your tourist spot has been deleted.",
+              text: "Your room has been deleted.",
               icon: "success",
             });
             const remainingBookedRooms = myBookings.filter((myBooking) => myBooking._id != id);
@@ -113,6 +118,7 @@ const MyBookings = () => {
                 <th>Booked Date</th>
                 <th>Update</th>
                 <th>Delete</th>
+                <th>Post Review</th>
               </tr>
             </thead>
             <tbody>
@@ -128,7 +134,10 @@ const MyBookings = () => {
                     <FaEdit onClick={() => handleModal(myBooking)} className="text-xl text-[#F6BC1C] hover:text-[#009144] hover:text-2xl"></FaEdit>
                   </td>
                   <td>
-                    <MdDeleteForever onClick={() => handleDelete(myBooking._id)} className="text-xl text-[#F6BC1C] hover:text-[#EE3F36] hover:text-2xl"></MdDeleteForever>
+                    <MdDeleteForever onClick={() => handleDelete(myBooking._id, myBooking.roomId)} className="text-xl text-[#F6BC1C] hover:text-[#EE3F36] hover:text-2xl"></MdDeleteForever>
+                  </td>
+                  <td>
+                    <button onClick={() => handleDelete(myBooking._id, myBooking.roomId)} className="text-xl text-[#F6BC1C] hover:text-[#EE3F36] hover:text-2xl"></button>
                   </td>
                 </tr>
               ))}

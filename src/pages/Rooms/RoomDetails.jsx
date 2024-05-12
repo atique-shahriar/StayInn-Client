@@ -1,21 +1,18 @@
-import { useContext, useState } from "react";
-import { Link, useLoaderData } from "react-router-dom";
-import { toast } from "react-toastify";
-
-import DatePicker from "react-datepicker";
-
 import axios from "axios";
+import { useContext, useState } from "react";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { AuthContext } from "../../components/AuthProvider/AuthProvider";
 
 const RoomDetails = () => {
   const roomInfo = useLoaderData();
   const [startDate, setStartDate] = useState(new Date());
   const [booked, setBooked] = useState();
-
   const {_id, image, description, price_per_night, size, availability} = roomInfo;
   const {user} = useContext(AuthContext);
-  const {displayName, email} = user;
+  const navigate = useNavigate();
 
   const handleBooked = () => {
     toast.error("Room is already booked. Sorry!");
@@ -37,11 +34,18 @@ const RoomDetails = () => {
     setBooked(bookedInfo);
   };
 
+  const handleBookNow = () => {
+    if (!user) {
+      navigate("/login");
+    }
+    document.getElementById("my_modal_1").showModal();
+  };
+
   const handleBookedRoom = () => {
     axios.post("http://localhost:5000/bookedRooms", booked).then((res) => {
       console.log(res.data);
       toast.success("Booked the room");
-      axios.put(`http://localhost:5000/room/${_id}`).then((res) => {
+      axios.put(`http://localhost:5000/room/${_id}`, {isAvailable: false}).then((res) => {
         console.log(res.data);
       });
     });
@@ -83,11 +87,11 @@ const RoomDetails = () => {
               <form onSubmit={handleSubmitData} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <div className="mb-4">
                   <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
-                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="name" defaultValue={displayName} placeholder="Enter your name" />
+                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="name" defaultValue={user?.displayName} placeholder="Enter your name" />
                 </div>
                 <div className="mb-4">
                   <label className="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" name="email" defaultValue={email} placeholder="Enter your email" />
+                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" name="email" defaultValue={user?.email} placeholder="Enter your email" />
                 </div>
                 <div className="mb-4">
                   <label className="block text-gray-700 text-sm font-bold mb-2">Room Type</label>
@@ -118,7 +122,6 @@ const RoomDetails = () => {
           )}
         </div>
       </dialog>
-
       <div
         className="hero h-48"
         style={{
@@ -145,7 +148,7 @@ const RoomDetails = () => {
           {availability ? (
             <div>
               <span className="text-[#199DFF] font-bold text-base mr-4">AVAILABLE</span>
-              <Link onClick={() => document.getElementById("my_modal_1").showModal()} className="bg-gradient-to-br from-[#FF7B19] to-[#FFCE32] hover:bg-gradient-to-bl py-2 px-6 font-bold text-white text-center">
+              <Link onClick={() => handleBookNow()} className="bg-gradient-to-br from-[#FF7B19] to-[#FFCE32] hover:bg-gradient-to-bl py-2 px-6 font-bold text-white text-center">
                 Book Now
               </Link>
             </div>
