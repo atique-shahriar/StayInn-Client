@@ -71,6 +71,12 @@ const MyBookings = () => {
       }
     });
   };
+
+  const handleReview = (bookInfo) => {
+    document.getElementById("my_modal_2").showModal();
+    setUpdateBook(bookInfo);
+  };
+
   return (
     <div className="shadow-lg mb-1">
       <dialog id="my_modal_1" className="modal">
@@ -104,6 +110,38 @@ const MyBookings = () => {
           </form>
         </div>
       </dialog>
+      <dialog id="my_modal_2" className="modal">
+        <div className="modal-box">
+          <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
+              <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="name" defaultValue={updateBook?.name} disabled placeholder="Enter your name" />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">Email</label>
+              <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" name="email" defaultValue={updateBook?.mail} disabled placeholder="Enter your email" />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">Room Type</label>
+              <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="roomType" disabled defaultValue={updateBook?.roomType} placeholder="Enter room type" />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">Price</label>
+              <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" name="price" disabled defaultValue={updateBook?.price} placeholder="Enter price" />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2">Date</label>
+              <div className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+              </div>
+            </div>
+            <div className="w-full flex justify-center">
+              <input className="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" value="Update" onClick={() => handleUpdateDate(updateBook?._id)} />
+            </div>
+          </form>
+        </div>
+      </dialog>
+
       <div className="w-10/12 lg:w-3/4 mx-auto min-h-[500px]">
         <div className="text-center space-y-4 flex flex-col items-center py-10 ">
           <h3 className="text-3xl font-bold text-[#3672B7]">My Booking List</h3>
@@ -137,7 +175,9 @@ const MyBookings = () => {
                     <MdDeleteForever onClick={() => handleDelete(myBooking._id, myBooking.roomId)} className="text-xl text-[#F6BC1C] hover:text-[#EE3F36] hover:text-2xl"></MdDeleteForever>
                   </td>
                   <td>
-                    <button onClick={() => handleDelete(myBooking._id, myBooking.roomId)} className="text-xl text-[#F6BC1C] hover:text-[#EE3F36] hover:text-2xl"></button>
+                    <button onClick={() => handleReview(myBooking)} className="text-xl text-[#F6BC1C] hover:text-[#EE3F36] hover:text-2xl">
+                      Review
+                    </button>
                   </td>
                 </tr>
               ))}
