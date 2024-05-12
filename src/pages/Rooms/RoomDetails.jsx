@@ -4,14 +4,16 @@ import { toast } from "react-toastify";
 
 import DatePicker from "react-datepicker";
 
+import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import { AuthContext } from "../../components/AuthProvider/AuthProvider";
 
 const RoomDetails = () => {
   const roomInfo = useLoaderData();
   const [startDate, setStartDate] = useState(new Date());
+  const [booked, setBooked] = useState();
 
-  const {image, description, price_per_night, size, availability} = roomInfo;
+  const {_id, image, description, price_per_night, size, availability} = roomInfo;
   const {user} = useContext(AuthContext);
   const {displayName, email} = user;
 
@@ -21,95 +23,99 @@ const RoomDetails = () => {
 
   const handleSubmitData = (e) => {
     e.preventDefault();
+    const roomId = _id;
     const name = e.target.name.value;
     const mail = e.target.email.value;
-    const roomType = e.target.email.value;
-    const price = e.target.email.value;
+    const roomType = e.target.roomType.value;
+    const price = parseInt(e.target.price.value);
     const date = startDate.toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
       year: "numeric",
     });
-    console.log(name, date);
+    const bookedInfo = {roomId, image, name, mail, roomType, price, date};
+    setBooked(bookedInfo);
+  };
+
+  const handleBookedRoom = () => {
+    axios.post("http://localhost:5000/bookedRooms", booked).then((res) => {
+      console.log(res.data);
+      toast.success("Booked the room");
+      axios.put(`http://localhost:5000/room/${_id}`).then((res) => {
+        console.log(res.data);
+      });
+    });
+  };
+
+  const handleDeleteBooked = () => {
+    setBooked(null);
   };
 
   return (
     <div>
       <dialog id="my_modal_1" className="modal">
-        <div className="modal-box">
-          <form
-            onSubmit={handleSubmitData}
-            className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-          >
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Name
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                name="name"
-                defaultValue={displayName}
-                placeholder="Enter your name"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Email
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="email"
-                name="email"
-                defaultValue={email}
-                placeholder="Enter your email"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Room Type
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                name="roomType"
-                disabled
-                defaultValue={size}
-                placeholder="Enter room type"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Price
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="number"
-                name="price"
-                disabled
-                defaultValue={price_per_night}
-                placeholder="Enter price"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Date
-              </label>
-              <div className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                <DatePicker
-                  selected={startDate}
-                  onChange={(date) => setStartDate(date)}
-                />
+        <div className="modal-box" method="dialog">
+          {booked ? (
+            <>
+              <div>
+                <img src={image} alt="" />
               </div>
-            </div>
-            <div className="w-full flex justify-center">
-              <input
-                className="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit"
-                value="Submit"
-              />
-            </div>
-          </form>
+              <div>
+                {price_per_night} {size}
+              </div>
+              <div>{description}</div>
+              <div>{booked.date}</div>
+              <div className="w-full flex justify-center">
+                <div className="modal-action">
+                  <form method="dialog">
+                    <button className="btn" onClick={handleDeleteBooked}>
+                      Cancel
+                    </button>
+                    <button className="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={handleBookedRoom}>
+                      Confirm
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <form onSubmit={handleSubmitData} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="name" defaultValue={displayName} placeholder="Enter your name" />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" name="email" defaultValue={email} placeholder="Enter your email" />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">Room Type</label>
+                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="roomType" disabled defaultValue={size} placeholder="Enter room type" />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">Price</label>
+                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" name="price" disabled defaultValue={price_per_night} placeholder="Enter price" />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">Date</label>
+                  <div className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+                  </div>
+                </div>
+                <div className="w-full flex justify-center">
+                  <input className="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" value="Submit" />
+                </div>
+              </form>
+              <div className="modal-action">
+                <form method="dialog">
+                  <button className="btn" onClick={handleDeleteBooked}>
+                    Cancel
+                  </button>
+                </form>
+              </div>
+            </>
+          )}
         </div>
       </dialog>
 
@@ -128,43 +134,25 @@ const RoomDetails = () => {
       </div>
       <div className="w-11/12 md:w-4/5 mx-auto mt-12 flex items-center ">
         <div>
-          <img
-            src={image}
-            alt=""
-            className="w-3/4 flex items-center justify-center"
-          />
+          <img src={image} alt="" className="w-3/4 flex items-center justify-center" />
         </div>
         <div className="space-y-2">
           <h3 className="font-bold text-3xl">{size} Room</h3>
-          <p className="font-bold text-base text-[#FF7B19]">
-            Price: ${price_per_night}/night
-          </p>
+          <p className="font-bold text-base text-[#FF7B19]">Price: ${price_per_night}/night</p>
           <p className="font-bold text-base text-[#FF7B19]">Review: </p>
           <p className="pb-6">{description}</p>
 
           {availability ? (
             <div>
-              <span className="text-[#199DFF] font-bold text-base mr-4">
-                AVAILABLE
-              </span>
-              <Link
-                onClick={() =>
-                  document.getElementById("my_modal_1").showModal()
-                }
-                className="bg-gradient-to-br from-[#FF7B19] to-[#FFCE32] hover:bg-gradient-to-bl py-2 px-6 font-bold text-white text-center"
-              >
+              <span className="text-[#199DFF] font-bold text-base mr-4">AVAILABLE</span>
+              <Link onClick={() => document.getElementById("my_modal_1").showModal()} className="bg-gradient-to-br from-[#FF7B19] to-[#FFCE32] hover:bg-gradient-to-bl py-2 px-6 font-bold text-white text-center">
                 Book Now
               </Link>
             </div>
           ) : (
             <div>
-              <span className="text-[#FF7B19] font-bold text-base mr-4">
-                UNAVAILABLE
-              </span>
-              <Link
-                onClick={handleBooked}
-                className="bg-gray-600  py-2 px-6 font-bold text-white text-center disabled"
-              >
+              <span className="text-[#FF7B19] font-bold text-base mr-4">UNAVAILABLE</span>
+              <Link onClick={handleBooked} className="bg-gray-600  py-2 px-6 font-bold text-white text-center disabled">
                 Booked
               </Link>
             </div>
