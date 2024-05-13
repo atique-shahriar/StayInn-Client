@@ -1,0 +1,14 @@
+.swiper {
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.swiper-slide {
+    background-position: center;
+    background-size: cover;
+    max-width: 400px;
+    height: 200px;
+    border-radius: 10px;
+    background-image: linear-gradient(rgb(226, 226, 226), rgb(255, 255, 255), rgb(226, 226, 226));
+}

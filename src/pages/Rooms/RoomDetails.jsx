@@ -233,7 +233,7 @@ const RoomDetails = () => {
                             )}
                           </div>
                         </td>
-                        <td>{review.currTime}</td>
+                        <td>{review.dateTime}</td>
                       </tr>
                     ))}
                   </tbody>

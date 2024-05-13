@@ -1,25 +1,37 @@
 import axios from "axios";
 import { PropTypes } from "prop-types";
+import { useContext } from "react";
 import { toast } from "react-toastify";
+import { AuthContext } from "../../components/AuthProvider/AuthProvider";
 
 const RatingModal = ({ratingBook}) => {
+  const {user} = useContext(AuthContext);
+  console.log(ratingBook);
   const handleReviewSubmit = (e) => {
     e.preventDefault();
     const roomId = ratingBook.roomId;
     const name = ratingBook.name;
+    const userPhoto = user?.photoURL;
     const roomType = ratingBook.roomType;
     const price = ratingBook.price;
     const comment = e.target.comment.value;
     const ratings = parseInt(e.target.ratings.value);
     const currTime = new Date();
+    const timestamp = currTime.getTime();
+    const dateString = currTime.toDateString();
+    const timeString = currTime.toLocaleTimeString();
+    const dateTime = dateString + ", " + timeString;
     const bookedInfo = {
       roomId,
       name,
+      userPhoto,
       roomType,
       price,
       comment,
       ratings,
       currTime,
+      timestamp,
+      dateTime,
     };
     console.log(bookedInfo);
     axios.post("http://localhost:5000/ratings", bookedInfo).then((res) => {

@@ -15,7 +15,9 @@ const MyBookings = () => {
   const {user} = useContext(AuthContext);
   const {email} = user;
   const bookings = allBookedRoom.filter((room) => room.mail == email);
+
   const [myBookings, setMyBookings] = useState(bookings);
+  console.log(myBookings);
 
   const [updateBook, setUpdateBook] = useState();
   const [ratingBook, setRatingBook] = useState();
@@ -35,11 +37,9 @@ const MyBookings = () => {
           console.log(res.data);
           if (res.data.deletedCount > 0) {
             console.log(roomId);
-            axios
-              .put(`http://localhost:5000/room/${roomId}`, {isAvailable: true})
-              .then((res) => {
-                console.log(res.data);
-              });
+            axios.put(`http://localhost:5000/room/${roomId}`, {isAvailable: true}).then((res) => {
+              console.log(res.data);
+            });
 
             console.log("Deleted Successfully");
             Swal.fire({
@@ -47,9 +47,7 @@ const MyBookings = () => {
               text: "Your room has been deleted.",
               icon: "success",
             });
-            const remainingBookedRooms = myBookings.filter(
-              (myBooking) => myBooking._id != id
-            );
+            const remainingBookedRooms = myBookings.filter((myBooking) => myBooking._id != id);
             setMyBookings(remainingBookedRooms);
           }
         });
@@ -106,24 +104,13 @@ const MyBookings = () => {
                   <td className="hidden md:block">$ {myBooking.price}</td>
                   <td>{myBooking.date}</td>
                   <td>
-                    <FaEdit
-                      onClick={() => handleUpdateDate(myBooking)}
-                      className="text-xl text-[#F6BC1C] hover:text-[#009144] hover:text-2xl"
-                    ></FaEdit>
+                    <FaEdit onClick={() => handleUpdateDate(myBooking)} className="text-xl text-[#F6BC1C] hover:text-[#009144] hover:text-2xl"></FaEdit>
                   </td>
                   <td>
-                    <MdDeleteForever
-                      onClick={() =>
-                        handleDelete(myBooking._id, myBooking.roomId)
-                      }
-                      className="text-xl text-[#F6BC1C] hover:text-[#EE3F36] hover:text-2xl"
-                    ></MdDeleteForever>
+                    <MdDeleteForever onClick={() => handleDelete(myBooking._id, myBooking.roomId)} className="text-xl text-[#F6BC1C] hover:text-[#EE3F36] hover:text-2xl"></MdDeleteForever>
                   </td>
                   <td>
-                    <button
-                      onClick={() => handleReview(myBooking)}
-                      className="text-xl text-[#F6BC1C] hover:text-[#EE3F36] hover:text-2xl"
-                    >
+                    <button onClick={() => handleReview(myBooking)} className="text-xl text-[#F6BC1C] hover:text-[#EE3F36] hover:text-2xl">
                       Review
                     </button>
                   </td>
