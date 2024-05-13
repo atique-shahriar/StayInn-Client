@@ -22,7 +22,10 @@ const Ratings = () => {
     <div>
       <div className="text-center space-y-4 flex flex-col items-center">
         <h3 className="text-3xl font-bold text-[#199DFF]">Raving Reviews</h3>
-        <p className=" max-w-screen-lg">Explore what our customers have to say about their experiences with our products and services. Read their reviews!</p>
+        <p className=" max-w-screen-lg">
+          Explore what our customers have to say about their experiences with
+          our products and services. Read their reviews!
+        </p>
       </div>
       <div>
         <Swiper
@@ -43,9 +46,13 @@ const Ratings = () => {
         >
           {allRatings.map((rating) => (
             <SwiperSlide key={rating._id}>
-              <div className="flex justify-center items-center gap-6 px-4 md:px-8">
+              <div className="flex justify-center items-center gap-6 px-4 md:px-8  min-h-[200px]">
                 <div>
-                  <img src={rating.userPhoto} alt="" className="w-24 h-24 rounded-[100%]" />
+                  <img
+                    src={rating.userPhoto}
+                    alt=""
+                    className="w-24 h-24 rounded-[100%]"
+                  />
                 </div>
                 <div className="text-left space-y-1">
                   <h3 className="text-ll font-bold">{rating.name}</h3>
