@@ -22,7 +22,7 @@ const MyBookings = () => {
   const [updateBook, setUpdateBook] = useState();
   const [ratingBook, setRatingBook] = useState();
 
-  const handleDelete = (id, roomId) => {
+  const handleDelete = (id, roomId, bookDate) => {
     Swal.fire({
       title: "Are you sure to delete this one?",
       text: "You won't be able to revert this!",
@@ -107,7 +107,7 @@ const MyBookings = () => {
                     <FaEdit onClick={() => handleUpdateDate(myBooking)} className="text-xl text-[#F6BC1C] hover:text-[#009144] hover:text-2xl"></FaEdit>
                   </td>
                   <td>
-                    <MdDeleteForever onClick={() => handleDelete(myBooking._id, myBooking.roomId)} className="text-xl text-[#F6BC1C] hover:text-[#EE3F36] hover:text-2xl"></MdDeleteForever>
+                    <MdDeleteForever onClick={() => handleDelete(myBooking._id, myBooking.roomId, myBooking.date)} className="text-xl text-[#F6BC1C] hover:text-[#EE3F36] hover:text-2xl"></MdDeleteForever>
                   </td>
                   <td>
                     <button onClick={() => handleReview(myBooking)} className="text-xl text-[#F6BC1C] hover:text-[#EE3F36] hover:text-2xl">

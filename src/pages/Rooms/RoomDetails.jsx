@@ -26,6 +26,7 @@ const RoomDetails = () => {
     const mail = e.target.email.value;
     const roomType = e.target.roomType.value;
     const price = parseInt(e.target.price.value);
+    console.log(startDate);
     const date = startDate.toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
