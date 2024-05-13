@@ -8,7 +8,7 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import { EffectCoverflow, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "../Ratings/style.css";
+import "../Ratings/RatingStyle.css";
 
 const Ratings = () => {
   const [allRatings, setAllRatings] = useState([]);
@@ -20,6 +20,10 @@ const Ratings = () => {
   }, []);
   return (
     <div>
+      <div className="text-center space-y-4 flex flex-col items-center">
+        <h3 className="text-3xl font-bold text-[#199DFF]">Raving Reviews</h3>
+        <p className=" max-w-screen-lg">Explore what our customers have to say about their experiences with our products and services. Read their reviews!</p>
+      </div>
       <div>
         <Swiper
           effect={"coverflow"}
