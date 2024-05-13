@@ -11,7 +11,7 @@ const RatingModal = ({ratingBook}) => {
     const price = ratingBook.price;
     const comment = e.target.comment.value;
     const ratings = parseInt(e.target.ratings.value);
-    const currTime = new Date().toLocaleTimeString();
+    const currTime = new Date();
     const bookedInfo = {
       roomId,
       name,
@@ -24,9 +24,7 @@ const RatingModal = ({ratingBook}) => {
     console.log(bookedInfo);
     axios.post("http://localhost:5000/ratings", bookedInfo).then((res) => {
       console.log(res.data);
-      axios
-        .put(`http://localhost:5000/rooms/${roomId}`, {bookedInfo})
-        .then((res) => console.log(res.data));
+      axios.put(`http://localhost:5000/rooms/${roomId}`, {bookedInfo}).then((res) => console.log(res.data));
     });
     toast.success("Review added successfully");
     setTimeout(() => {
@@ -36,71 +34,30 @@ const RatingModal = ({ratingBook}) => {
 
   return (
     <div className="modal-box">
-      <form
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-        onSubmit={handleReviewSubmit}
-      >
+      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleReviewSubmit}>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Name
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
-            name="name"
-            defaultValue={ratingBook?.name}
-            disabled
-          />
+          <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
+          <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="name" defaultValue={ratingBook?.name} disabled />
         </div>
 
         <div className="mb-4 flex gap-4">
           <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Room Type
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="text"
-              name="roomType"
-              disabled
-              defaultValue={ratingBook?.roomType}
-            />
+            <label className="block text-gray-700 text-sm font-bold mb-2">Room Type</label>
+            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="roomType" disabled defaultValue={ratingBook?.roomType} />
           </div>
 
           <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Price
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="number"
-              name="price"
-              disabled
-              defaultValue={ratingBook?.price}
-            />
+            <label className="block text-gray-700 text-sm font-bold mb-2">Price</label>
+            <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" name="price" disabled defaultValue={ratingBook?.price} />
           </div>
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Comment
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
-            name="comment"
-            required
-            placeholder="Share your experince"
-          />
+          <label className="block text-gray-700 text-sm font-bold mb-2">Comment</label>
+          <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="comment" required placeholder="Share your experince" />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Ratings
-          </label>
-          <select
-            name="ratings"
-            id=""
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          >
+          <label className="block text-gray-700 text-sm font-bold mb-2">Ratings</label>
+          <select name="ratings" id="" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
             <option value="" disabled name="ratings">
               Give your ratings
             </option>
@@ -112,11 +69,7 @@ const RatingModal = ({ratingBook}) => {
           </select>
         </div>
         <div className="w-full flex justify-center">
-          <input
-            className="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-            value="Click"
-          />
+          <input className="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" value="Click" />
         </div>
       </form>
     </div>

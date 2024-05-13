@@ -6,6 +6,7 @@ import AuthProvider from "./components/AuthProvider/AuthProvider.jsx";
 import PrivateRoute from "./components/AuthProvider/PrivateRoute.jsx";
 import "./index.css";
 import AboutUs from "./pages/AboutUs/AboutUs.jsx";
+import ErrorPage from "./pages/ErrorPage/ErrorPage.jsx";
 import Home from "./pages/Home/Home.jsx";
 import Login from "./pages/LoginRegister/Login.jsx";
 import Register from "./pages/LoginRegister/Register.jsx";
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App></App>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
