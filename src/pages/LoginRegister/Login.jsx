@@ -2,12 +2,16 @@ import axios from "axios";
 import { GoogleAuthProvider } from "firebase/auth";
 import { useContext } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../components/AuthProvider/AuthProvider";
 
 const Login = () => {
   const {signInUser, signInGoogle} = useContext(AuthContext);
+  const location = useLocation();
+  console.log(location);
+  const navigate = useNavigate();
+
   const handleSignIn = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -19,6 +23,18 @@ const Login = () => {
       .then((result) => {
         console.log(result.user);
         toast.success("Logged in successfully");
+        const user = {email};
+
+        axios
+          .post("http://localhost:5000/jwt", user, {withCredentials: true})
+          .then((res) => {
+            console.log(res.data);
+            if (res.data.success) {
+              setTimeout(() => {
+                navigate(location?.state ? location.state : "/");
+              }, 1000);
+            }
+          });
       })
       .catch((error) => {
         console.log(error.message);
@@ -32,15 +48,17 @@ const Login = () => {
       .then((result) => {
         console.log("Login with google", result.user);
         toast.success("Logged in successfully with google");
+
         const userName = result.user.displayName;
         const userEmail = result.user.email;
         const userPhoto = result.user.photoURL;
-
         const user = {userName, userEmail, userPhoto};
-
         axios.post("http://localhost:5000/users", user).then((res) => {
           console.log(res.data);
         });
+        setTimeout(() => {
+          navigate(location?.state ? location.state : "/");
+        }, 1000);
       })
       .catch((error) => {
         console.log("Login with google  failed", error.message);

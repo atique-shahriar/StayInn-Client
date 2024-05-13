@@ -3,12 +3,18 @@ import { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaRegStar, FaStar } from "react-icons/fa";
-import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useLoaderData,
+  useLocation,
+  useNavigate
+} from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../components/AuthProvider/AuthProvider";
 
 const RoomDetails = () => {
   const roomInfo = useLoaderData();
+  const navigate = useNavigate();
   const [startDate, setStartDate] = useState(new Date());
   const [booked, setBooked] = useState();
   const {
@@ -21,7 +27,6 @@ const RoomDetails = () => {
     reviews,
   } = roomInfo;
   const {user} = useContext(AuthContext);
-  const navigate = useNavigate();
 
   const handleBooked = () => {
     toast.error("Room is already booked. Sorry!");
@@ -61,11 +66,15 @@ const RoomDetails = () => {
     setBooked(bookedInfo);
   };
 
+  const location = useLocation();
+  console.log(location);
+
   const handleBookNow = () => {
     if (!user) {
       navigate("/login");
+    } else {
+      document.getElementById("my_modal_1").showModal();
     }
-    document.getElementById("my_modal_1").showModal();
   };
 
   const handleBookedRoom = () => {
@@ -240,6 +249,7 @@ const RoomDetails = () => {
                 <span className="text-[#199DFF] font-bold text-base mr-4">
                   AVAILABLE
                 </span>
+
                 <Link
                   onClick={() => handleBookNow()}
                   className="bg-gradient-to-br from-[#FF7B19] to-[#FFCE32] hover:bg-gradient-to-bl py-2 px-6 font-bold text-white text-center"
@@ -284,7 +294,6 @@ const RoomDetails = () => {
                     {reviews.map((review) => (
                       <tr key={review._id}>
                         <td>{review.name}</td>
-
                         <td>
                           {review.comment} <br />{" "}
                           <div className="text-amber-400 text-base">
