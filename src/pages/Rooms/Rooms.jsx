@@ -6,8 +6,15 @@ import RoomCard from "./RoomCard";
 const Rooms = () => {
   const [rooms, setRooms] = useState([]);
 
+  // useEffect(() => {
+  //   axios.get(`https://b9a11-server-side-atique-shahriar.vercel.app/roomsAvailable/${"all"}`).then((res) => {
+  //     setRooms(res.data);
+  //     console.log(res.data);
+  //   });
+  // }, []);
+
   useEffect(() => {
-    axios.get(`https://b9a11-server-side-atique-shahriar.vercel.app/roomsAvailable/${"all"}`).then((res) => {
+    axios.get(`https://b9a11-server-side-atique-shahriar.vercel.app/roomsAll/${"all"}`).then((res) => {
       setRooms(res.data);
       console.log(res.data);
     });
@@ -17,14 +24,25 @@ const Rooms = () => {
     const selected = e.target.value;
     console.log(selected);
     if (selected) {
-      axios
-        .get(`https://b9a11-server-side-atique-shahriar.vercel.app/roomsAvailable/${selected}`)
-        .then((res) => {
-          setRooms(res.data);
-          console.log(res.data);
-        });
+      axios.get(`https://b9a11-server-side-atique-shahriar.vercel.app/roomsAll/${selected}`).then((res) => {
+        setRooms(res.data);
+        console.log(res.data);
+      });
     }
   };
+
+  // const handlePriceFilter = (e) => {
+  //   const selected = e.target.value;
+  //   console.log(selected);
+  //   if (selected) {
+  //     axios
+  //       .get(`https://b9a11-server-side-atique-shahriar.vercel.app/roomsAvailable/${selected}`)
+  //       .then((res) => {
+  //         setRooms(res.data);
+  //         console.log(res.data);
+  //       });
+  //   }
+  // };
 
   return (
     <div className="w-11/12 md:w-4/5 mx-auto py-4">
