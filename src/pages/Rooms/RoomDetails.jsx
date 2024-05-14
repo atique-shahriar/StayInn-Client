@@ -3,12 +3,7 @@ import { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaRegStar, FaStar } from "react-icons/fa";
-import {
-  Link,
-  useLoaderData,
-  useLocation,
-  useNavigate
-} from "react-router-dom";
+import { Link, useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../components/AuthProvider/AuthProvider";
 
@@ -17,15 +12,7 @@ const RoomDetails = () => {
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState(new Date());
   const [booked, setBooked] = useState();
-  const {
-    _id,
-    image,
-    description,
-    price_per_night,
-    size,
-    availability,
-    reviews,
-  } = roomInfo;
+  const {_id, image, description, price_per_night, size, availability, reviews} = roomInfo;
   const {user} = useContext(AuthContext);
 
   const handleBooked = () => {
@@ -36,7 +23,7 @@ const RoomDetails = () => {
     e.preventDefault();
     const roomId = _id;
     const name = e.target.name.value;
-    const mail = e.target.email.value;
+    const email = e.target.email.value;
     const roomType = e.target.roomType.value;
     const price = parseInt(e.target.price.value);
     console.log(startDate);
@@ -57,7 +44,7 @@ const RoomDetails = () => {
       roomId,
       image,
       name,
-      mail,
+      email,
       roomType,
       price,
       date,
@@ -81,11 +68,9 @@ const RoomDetails = () => {
     axios.post("http://localhost:5000/bookedRooms", booked).then((res) => {
       console.log(res.data);
       toast.success("Booked the room");
-      axios
-        .put(`http://localhost:5000/room/${_id}`, {isAvailable: false})
-        .then((res) => {
-          console.log(res.data);
-        });
+      axios.put(`http://localhost:5000/room/${_id}`, {isAvailable: false}).then((res) => {
+        console.log(res.data);
+      });
     });
   };
 
@@ -113,10 +98,7 @@ const RoomDetails = () => {
                     <button className="btn" onClick={handleDeleteBooked}>
                       Cancel
                     </button>
-                    <button
-                      className="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                      onClick={handleBookedRoom}
-                    >
+                    <button className="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={handleBookedRoom}>
                       Confirm
                     </button>
                   </form>
@@ -125,77 +107,31 @@ const RoomDetails = () => {
             </>
           ) : (
             <>
-              <form
-                onSubmit={handleSubmitData}
-                className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-              >
+              <form onSubmit={handleSubmitData} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Name
-                  </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="text"
-                    name="name"
-                    defaultValue={user?.displayName}
-                    placeholder="Enter your name"
-                  />
+                  <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="name" defaultValue={user?.displayName} placeholder="Enter your name" />
                 </div>
                 <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Email
-                  </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="email"
-                    name="email"
-                    defaultValue={user?.email}
-                    placeholder="Enter your email"
-                  />
+                  <label className="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" name="email" defaultValue={user?.email} placeholder="Enter your email" />
                 </div>
                 <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Room Type
-                  </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="text"
-                    name="roomType"
-                    disabled
-                    defaultValue={size}
-                    placeholder="Enter room type"
-                  />
+                  <label className="block text-gray-700 text-sm font-bold mb-2">Room Type</label>
+                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="roomType" disabled defaultValue={size} placeholder="Enter room type" />
                 </div>
                 <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Price
-                  </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="number"
-                    name="price"
-                    disabled
-                    defaultValue={price_per_night}
-                    placeholder="Enter price"
-                  />
+                  <label className="block text-gray-700 text-sm font-bold mb-2">Price</label>
+                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" name="price" disabled defaultValue={price_per_night} placeholder="Enter price" />
                 </div>
                 <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Date
-                  </label>
+                  <label className="block text-gray-700 text-sm font-bold mb-2">Date</label>
                   <div className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                    <DatePicker
-                      selected={startDate}
-                      onChange={(date) => setStartDate(date)}
-                    />
+                    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
                   </div>
                 </div>
                 <div className="w-full flex justify-center">
-                  <input
-                    className="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    type="submit"
-                    value="Submit"
-                  />
+                  <input className="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" value="Submit" />
                 </div>
               </form>
               <div className="modal-action">
@@ -225,47 +161,26 @@ const RoomDetails = () => {
       <div className="w-11/12 md:w-4/5 mx-auto my-12 ">
         <div className="flex items-center ">
           <div>
-            <img
-              src={image}
-              alt=""
-              className="w-3/4 flex items-center justify-center"
-            />
+            <img src={image} alt="" className="w-3/4 flex items-center justify-center" />
           </div>
           <div className="space-y-2">
             <h3 className="font-bold text-3xl">{size} Room</h3>
-            <p className="font-bold text-base text-[#FF7B19]">
-              Price: ${price_per_night}/night
-            </p>
-            <p className="font-bold text-base text-[#FF7B19]">
-              Review:{" "}
-              {reviews.length > 0
-                ? reviews.length
-                : "Currently no review availabe"}
-            </p>
+            <p className="font-bold text-base text-[#FF7B19]">Price: ${price_per_night}/night</p>
+            <p className="font-bold text-base text-[#FF7B19]">Review: {reviews.length > 0 ? reviews.length : "Currently no review availabe"}</p>
             <p className="pb-6">{description}</p>
 
             {availability ? (
               <div>
-                <span className="text-[#199DFF] font-bold text-base mr-4">
-                  AVAILABLE
-                </span>
+                <span className="text-[#199DFF] font-bold text-base mr-4">AVAILABLE</span>
 
-                <Link
-                  onClick={() => handleBookNow()}
-                  className="bg-gradient-to-br from-[#FF7B19] to-[#FFCE32] hover:bg-gradient-to-bl py-2 px-6 font-bold text-white text-center"
-                >
+                <Link onClick={() => handleBookNow()} className="bg-gradient-to-br from-[#FF7B19] to-[#FFCE32] hover:bg-gradient-to-bl py-2 px-6 font-bold text-white text-center">
                   Book Now
                 </Link>
               </div>
             ) : (
               <div>
-                <span className="text-[#FF7B19] font-bold text-base mr-4">
-                  UNAVAILABLE
-                </span>
-                <Link
-                  onClick={handleBooked}
-                  className="bg-gray-600  py-2 px-6 font-bold text-white text-center disabled"
-                >
+                <span className="text-[#FF7B19] font-bold text-base mr-4">UNAVAILABLE</span>
+                <Link onClick={handleBooked} className="bg-gray-600  py-2 px-6 font-bold text-white text-center disabled">
                   Booked
                 </Link>
               </div>
@@ -277,9 +192,7 @@ const RoomDetails = () => {
           {reviews.length > 0 ? (
             <div>
               <div className="text-center space-y-4 flex flex-col items-center py-10 ">
-                <h3 className="text-3xl font-bold text-[#3672B7]">
-                  All reviews for this room
-                </h3>
+                <h3 className="text-3xl font-bold text-[#3672B7]">All reviews for this room</h3>
               </div>
               <div className="overflow-x-auto">
                 <table className="table">

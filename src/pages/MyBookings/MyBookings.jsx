@@ -1,9 +1,8 @@
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
-import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../components/AuthProvider/AuthProvider";
 
 import { toast } from "react-toastify";
@@ -12,12 +11,17 @@ import RatingModal from "./RatingModal";
 import UpdateModal from "./UpdateModal";
 
 const MyBookings = () => {
-  const allBookedRoom = useLoaderData();
+  // const allBookedRoom = useLoaderData();
   const {user} = useContext(AuthContext);
-  const {email} = user;
-  const bookings = allBookedRoom.filter((room) => room.mail == email);
+  // const {email} = user;
+  const [myBookings, setMyBookings] = useState([]);
+  // const bookings = allBookedRoom.filter((room) => room.mail == email);
 
-  const [myBookings, setMyBookings] = useState(bookings);
+  const url = `http://localhost:5000/book?email=${user?.email}`;
+  useEffect(() => {
+    axios.get(url, {withCredentials: true}).then((res) => setMyBookings(res.data));
+  }, [url]);
+
   console.log(myBookings);
 
   const [updateBook, setUpdateBook] = useState();
@@ -29,11 +33,11 @@ const MyBookings = () => {
     const bookedDate = new Date(bookDate).getTime();
     const deleteBy = bookedDate - 8600000;
     const currDate = new Date().getTime();
-    console.log(
-      bookedDate / 86400000,
-      deleteBy / 86400000,
-      currDate / 86400000
-    );
+    // console.log(
+    //   bookedDate / 86400000,
+    //   deleteBy / 86400000,
+    //   currDate / 86400000
+    // );
 
     if (currDate < deleteBy) {
       Swal.fire({
@@ -46,32 +50,28 @@ const MyBookings = () => {
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.isConfirmed) {
-          axios
-            .delete(`http://localhost:5000/bookedRooms/${id}`)
-            .then((res) => {
-              console.log(res.data);
-              if (res.data.deletedCount > 0) {
-                console.log(roomId);
-                axios
-                  .put(`http://localhost:5000/room/${roomId}`, {
-                    isAvailable: true,
-                  })
-                  .then((res) => {
-                    console.log(res.data);
-                  });
-
-                console.log("Deleted Successfully");
-                Swal.fire({
-                  title: "Deleted!",
-                  text: "Your room has been deleted.",
-                  icon: "success",
+          axios.delete(`http://localhost:5000/bookedRooms/${id}`).then((res) => {
+            console.log(res.data);
+            if (res.data.deletedCount > 0) {
+              console.log(roomId);
+              axios
+                .put(`http://localhost:5000/room/${roomId}`, {
+                  isAvailable: true,
+                })
+                .then((res) => {
+                  console.log(res.data);
                 });
-                const remainingBookedRooms = myBookings.filter(
-                  (myBooking) => myBooking._id != id
-                );
-                setMyBookings(remainingBookedRooms);
-              }
-            });
+
+              console.log("Deleted Successfully");
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your room has been deleted.",
+                icon: "success",
+              });
+              const remainingBookedRooms = myBookings.filter((myBooking) => myBooking._id != id);
+              setMyBookings(remainingBookedRooms);
+            }
+          });
         }
       });
     } else {
@@ -128,28 +128,13 @@ const MyBookings = () => {
                   <td className="hidden md:block">$ {myBooking.price}</td>
                   <td>{myBooking.date}</td>
                   <td>
-                    <FaEdit
-                      onClick={() => handleUpdateDate(myBooking)}
-                      className="text-xl text-[#F6BC1C] hover:text-[#009144] hover:text-2xl"
-                    ></FaEdit>
+                    <FaEdit onClick={() => handleUpdateDate(myBooking)} className="text-xl text-[#F6BC1C] hover:text-[#009144] hover:text-2xl"></FaEdit>
                   </td>
                   <td>
-                    <MdDeleteForever
-                      onClick={() =>
-                        handleDelete(
-                          myBooking._id,
-                          myBooking.roomId,
-                          myBooking.date
-                        )
-                      }
-                      className="text-xl text-[#F6BC1C] hover:text-[#EE3F36] hover:text-2xl"
-                    ></MdDeleteForever>
+                    <MdDeleteForever onClick={() => handleDelete(myBooking._id, myBooking.roomId, myBooking.date)} className="text-xl text-[#F6BC1C] hover:text-[#EE3F36] hover:text-2xl"></MdDeleteForever>
                   </td>
                   <td>
-                    <button
-                      onClick={() => handleReview(myBooking)}
-                      className="text-xl text-[#F6BC1C] hover:text-[#EE3F36] hover:text-2xl"
-                    >
+                    <button onClick={() => handleReview(myBooking)} className="text-xl text-[#F6BC1C] hover:text-[#EE3F36] hover:text-2xl">
                       Review
                     </button>
                   </td>

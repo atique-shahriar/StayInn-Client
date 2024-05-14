@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../components/AuthProvider/AuthProvider";
 
 const Register = () => {
-  const {createUser} = useContext(AuthContext);
-
+  const {createUser, updateCreateUser} = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleRegisterInfo = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
@@ -29,8 +29,19 @@ const Register = () => {
 
     createUser(email, password)
       .then((res) => {
-        toast.success("Successfully Registered");
         console.log(res.user);
+        updateCreateUser(name, photoUrl)
+          .then(() => {
+            toast.success("Added Username & PhotoUrl");
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+        e.target.reset();
+        toast.success("Successfully Registered");
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
 
         const user = {name, email, photoUrl};
         axios.post("http://localhost:5000/users", user).then((res) => {
@@ -52,57 +63,27 @@ const Register = () => {
           </div>
         </div>
         <div className=" border-2 border-gray-200 rounded-lg py-8 px-6 h-fit">
-          <h3 className="text-3xl font-bold text-[#199DFF] text-center mb-6">
-            Register
-          </h3>
+          <h3 className="text-3xl font-bold text-[#199DFF] text-center mb-6">Register</h3>
           <div>
             <form className="space-y-4" onSubmit={handleRegisterInfo}>
               <div className="space-y-2">
                 <label>Name</label>
-                <input
-                  type="text"
-                  placeholder="Type Name"
-                  name="name"
-                  className="w-full border rounded-md border-black px-2 py-2"
-                  required
-                />
+                <input type="text" placeholder="Type Name" name="name" className="w-full border rounded-md border-black px-2 py-2" required />
               </div>
               <div className="space-y-2">
                 <label>Photo Url</label>
-                <input
-                  type="text"
-                  placeholder="Type Photo Url"
-                  name="photoUrl"
-                  className="w-full border rounded-md border-black px-2 py-2"
-                  required
-                />
+                <input type="text" placeholder="Type Photo Url" name="photoUrl" className="w-full border rounded-md border-black px-2 py-2" required />
               </div>
               <div className="space-y-2">
                 <label>Email</label>
-                <input
-                  type="email"
-                  placeholder="Type Email"
-                  name="email"
-                  className="w-full border rounded-md border-black px-2 py-2"
-                  required
-                />
+                <input type="email" placeholder="Type Email" name="email" className="w-full border rounded-md border-black px-2 py-2" required />
               </div>
               <div className="space-y-2">
                 <label>Password</label>
-                <input
-                  type="password"
-                  placeholder="Type Password"
-                  name="password"
-                  className="w-full border rounded-md border-black px-2 py-2"
-                  required
-                />
+                <input type="password" placeholder="Type Password" name="password" className="w-full border rounded-md border-black px-2 py-2" required />
               </div>
               <div className="pt-4">
-                <input
-                  type="submit"
-                  value="Register"
-                  className="w-full border rounded-md bg-gradient-to-l from-[#3263FF] to-[#57b6ff] hover:bg-gradient-to-r text-lg hover:border hover:border-[#3263FF] text-white font-semibold px-2 py-2"
-                />
+                <input type="submit" value="Register" className="w-full border rounded-md bg-gradient-to-l from-[#3263FF] to-[#57b6ff] hover:bg-gradient-to-r text-lg hover:border hover:border-[#3263FF] text-white font-semibold px-2 py-2" />
               </div>
             </form>
           </div>
