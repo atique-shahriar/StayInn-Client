@@ -6,6 +6,7 @@ import AuthProvider from "./components/AuthProvider/AuthProvider.jsx";
 import PrivateRoute from "./components/AuthProvider/PrivateRoute.jsx";
 import "./index.css";
 import AboutUs from "./pages/AboutUs/AboutUs.jsx";
+import ContactUs from "./pages/ContactUs/ContactUs.jsx";
 import ErrorPage from "./pages/ErrorPage/ErrorPage.jsx";
 import Home from "./pages/Home/Home.jsx";
 import Login from "./pages/LoginRegister/Login.jsx";
@@ -39,7 +40,10 @@ const router = createBrowserRouter([
       {
         path: "/roomdetails/:id",
         element: <RoomDetails></RoomDetails>,
-        loader: ({params}) => fetch(`https://b9a11-server-side-atique-shahriar.vercel.app/room/${params.id}`),
+        loader: ({params}) =>
+          fetch(
+            `https://b9a11-server-side-atique-shahriar.vercel.app/room/${params.id}`
+          ),
       },
 
       {
@@ -55,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: "/aboutus",
         element: <AboutUs></AboutUs>,
+      },
+      {
+        path: "/contactus",
+        element: <ContactUs></ContactUs>,
       },
     ],
   },

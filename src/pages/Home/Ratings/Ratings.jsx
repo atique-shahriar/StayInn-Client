@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { RiDoubleQuotesL, RiDoubleQuotesR } from "react-icons/ri";
+import { Link } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
@@ -13,13 +14,15 @@ import "../Ratings/RatingStyle.css";
 const Ratings = () => {
   const [allRatings, setAllRatings] = useState([]);
   useEffect(() => {
-    axios.get("https://b9a11-server-side-atique-shahriar.vercel.app/ratingsAsc").then((res) => {
-      setAllRatings(res.data);
-      console.log(res.data);
-    });
+    axios
+      .get("https://b9a11-server-side-atique-shahriar.vercel.app/ratingsAsc")
+      .then((res) => {
+        setAllRatings(res.data);
+        console.log(res.data);
+      });
   }, []);
   return (
-    <div>
+    <div className="w-11/12 lg:w-4/5 mx-auto my-10">
       <div className="text-center space-y-4 flex flex-col items-center">
         <h3 className="text-3xl font-bold text-[#199DFF]">Raving Reviews</h3>
         <p className=" max-w-screen-lg">
@@ -51,19 +54,20 @@ const Ratings = () => {
                   <img
                     src={rating.userPhoto}
                     alt=""
-                    className="w-24 h-24 rounded-[100%]"
+                    className="w-24 h-24 rounded-[100%] border-white border-4"
                   />
                 </div>
                 <div className="text-left space-y-1">
                   <h3 className="text-ll font-bold">{rating.name}</h3>
                   <p className="text-xs">{rating.dateTime}</p>
+                  <p className="text-xs">{rating.roomType}</p>
                   <hr className=""></hr>
                   <p className="flex gap-2">
                     <RiDoubleQuotesL />
                     {rating.comment}
                     <RiDoubleQuotesR />
                   </p>
-                  <p className="text-amber-400 flex justify-between">
+                  <p className="text-amber-400 flex justify-between items-center">
                     <div>
                       {rating.ratings == 1 ? (
                         <div className="flex gap-1">
@@ -110,8 +114,13 @@ const Ratings = () => {
                       )}
                     </div>
                     <div>
-                      <button>
-                        <FaArrowRightLong />
+                      <button
+                        className="tooltip  bg-[#199DFF] text-white hover:text-black  rounded-[100%] px-1 py-1"
+                        data-tip="Click to see room details"
+                      >
+                        <Link to={`/roomdetails/${rating.roomId}`}>
+                          <FaArrowRightLong />
+                        </Link>
                       </button>
                     </div>
                   </p>

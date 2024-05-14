@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { IoIosArrowDropright } from "react-icons/io";
 import { Link } from "react-router-dom";
 import FeaturedRoomCard from "./FeaturedRoomCard";
 
@@ -7,10 +8,12 @@ const FeaturedRooms = () => {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    axios.get("https://b9a11-server-side-atique-shahriar.vercel.app/rooms").then((res) => {
-      console.log(res.data);
-      setRooms(res.data);
-    });
+    axios
+      .get("https://b9a11-server-side-atique-shahriar.vercel.app/rooms")
+      .then((res) => {
+        console.log(res.data);
+        setRooms(res.data);
+      });
   }, []);
   console.log(rooms);
 
@@ -21,7 +24,7 @@ const FeaturedRooms = () => {
   }
 
   return (
-    <div className="w-10/12 lg:w-3/4 mx-auto my-10 space-y-8">
+    <div className="w-11/12 lg:w-4/5 mx-auto my-10 space-y-8">
       <div className="text-center space-y-4 flex flex-col items-center">
         <h3 className="text-3xl font-bold text-[#199DFF]">
           Luxury Room Showcase
@@ -40,10 +43,17 @@ const FeaturedRooms = () => {
         {rooms.length > 6 ? (
           <div>
             <Link
-              to="/allTouristSpot"
-              className="bg-gradient-to-l from-[#3263FF] to-[#57b6ff] hover:bg-gradient-to-r px-8 py-3 rounded-xl font-bold text-white text-center"
+              to="/rooms"
+              className="font-medium hover:font-bold text-[#FF3811]  text-center"
             >
-              See More
+              <div className="flex items-center relative mr-4">
+                <span className="border-2 border-[#FF3811] px-6 rounded-2xl py-1">
+                  Explore More
+                </span>
+                <span>
+                  <IoIosArrowDropright className="text-4xl bg-[#FF3811] rounded-[100%] text-white absolute top-0 left-[132px]"></IoIosArrowDropright>
+                </span>
+              </div>
             </Link>
           </div>
         ) : (

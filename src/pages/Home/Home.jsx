@@ -8,7 +8,7 @@ import Ratings from "./Ratings/Ratings";
 const Home = () => {
   window.addEventListener("load", function () {
     setTimeout(function () {
-      document.getElementById("my_modal_3").showModal();
+      document.getElementById("popup_1").showModal();
     }, 2000);
   });
 
@@ -16,12 +16,13 @@ const Home = () => {
     <div>
       <div>
         <Banner></Banner>
-        <dialog id="my_modal_3" className="modal">
+        <dialog id="popup_1" className="modal">
           <PopUp></PopUp>
         </dialog>
         <FeaturedRooms></FeaturedRooms>
         <Ratings></Ratings>
-        <Newsletter></Newsletter>
+        <Newsletter id="ourLocation"></Newsletter>
+
         <Map></Map>
       </div>
     </div>

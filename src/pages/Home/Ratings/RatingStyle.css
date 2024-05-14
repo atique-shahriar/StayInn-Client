@@ -7,5 +7,5 @@
     width: 400px;
     min-height: 200px;
     border-radius: 10px;
-    background-image: linear-gradient(rgb(226, 226, 226), rgb(255, 255, 255), rgb(226, 226, 226));
+    background-image: linear-gradient(#e1f2ff, #ffefeb);
 }
