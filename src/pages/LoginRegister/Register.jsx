@@ -44,7 +44,7 @@ const Register = () => {
         }, 1000);
 
         const user = {name, email, photoUrl};
-        axios.post("http://localhost:5000/users", user).then((res) => {
+        axios.post("https://b9a11-server-side-atique-shahriar.vercel.app/users", user).then((res) => {
           console.log(res.data);
         });
       })

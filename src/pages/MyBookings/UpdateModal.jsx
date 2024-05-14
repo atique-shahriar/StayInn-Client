@@ -15,7 +15,7 @@ const UpdateModal = ({updateBook}) => {
       day: "numeric",
       year: "numeric",
     });
-    axios.put(`http://localhost:5000/bookedRooms/${id}`, {date}).then((res) => {
+    axios.put(`https://b9a11-server-side-atique-shahriar.vercel.app/bookedRooms/${id}`, {date}).then((res) => {
       console.log(res.data);
       toast.success("Date Updated successfully");
       setTimeout(() => {

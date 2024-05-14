@@ -65,10 +65,10 @@ const RoomDetails = () => {
   };
 
   const handleBookedRoom = () => {
-    axios.post("http://localhost:5000/bookedRooms", booked).then((res) => {
+    axios.post("https://b9a11-server-side-atique-shahriar.vercel.app/bookedRooms", booked).then((res) => {
       console.log(res.data);
       toast.success("Booked the room");
-      axios.put(`http://localhost:5000/room/${_id}`, {isAvailable: false}).then((res) => {
+      axios.put(`https://b9a11-server-side-atique-shahriar.vercel.app/room/${_id}`, {isAvailable: false}).then((res) => {
         console.log(res.data);
       });
     });

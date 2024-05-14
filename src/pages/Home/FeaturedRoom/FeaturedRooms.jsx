@@ -7,7 +7,7 @@ const FeaturedRooms = () => {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/rooms").then((res) => {
+    axios.get("https://b9a11-server-side-atique-shahriar.vercel.app/rooms").then((res) => {
       console.log(res.data);
       setRooms(res.data);
     });

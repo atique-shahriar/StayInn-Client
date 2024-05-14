@@ -34,9 +34,9 @@ const RatingModal = ({ratingBook}) => {
       dateTime,
     };
     console.log(bookedInfo);
-    axios.post("http://localhost:5000/ratings", bookedInfo).then((res) => {
+    axios.post("https://b9a11-server-side-atique-shahriar.vercel.app/ratings", bookedInfo).then((res) => {
       console.log(res.data);
-      axios.put(`http://localhost:5000/rooms/${roomId}`, {bookedInfo}).then((res) => console.log(res.data));
+      axios.put(`https://b9a11-server-side-atique-shahriar.vercel.app/rooms/${roomId}`, {bookedInfo}).then((res) => console.log(res.data));
     });
     toast.success("Review added successfully");
     setTimeout(() => {

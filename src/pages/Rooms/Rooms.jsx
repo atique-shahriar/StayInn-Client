@@ -7,7 +7,7 @@ const Rooms = () => {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/roomsAvailable/${"all"}`).then((res) => {
+    axios.get(`https://b9a11-server-side-atique-shahriar.vercel.app/roomsAvailable/${"all"}`).then((res) => {
       setRooms(res.data);
       console.log(res.data);
     });
@@ -18,7 +18,7 @@ const Rooms = () => {
     console.log(selected);
     if (selected) {
       axios
-        .get(`http://localhost:5000/roomsAvailable/${selected}`)
+        .get(`https://b9a11-server-side-atique-shahriar.vercel.app/roomsAvailable/${selected}`)
         .then((res) => {
           setRooms(res.data);
           console.log(res.data);

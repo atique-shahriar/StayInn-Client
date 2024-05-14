@@ -39,7 +39,7 @@ const router = createBrowserRouter([
       {
         path: "/roomdetails/:id",
         element: <RoomDetails></RoomDetails>,
-        loader: ({params}) => fetch(`http://localhost:5000/room/${params.id}`),
+        loader: ({params}) => fetch(`https://b9a11-server-side-atique-shahriar.vercel.app/room/${params.id}`),
       },
 
       {
@@ -50,7 +50,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         // loader: () =>
-        //   fetch("http://localhost:5000/bookedRooms", {credentials: "include"}),
+        //   fetch("https://b9a11-server-side-atique-shahriar.vercel.app/bookedRooms", {credentials: "include"}),
       },
       {
         path: "/aboutus",

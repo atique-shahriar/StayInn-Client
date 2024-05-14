@@ -17,7 +17,7 @@ const MyBookings = () => {
   const [myBookings, setMyBookings] = useState([]);
   // const bookings = allBookedRoom.filter((room) => room.mail == email);
 
-  const url = `http://localhost:5000/book?email=${user?.email}`;
+  const url = `https://b9a11-server-side-atique-shahriar.vercel.app/book?email=${user?.email}`;
   useEffect(() => {
     axios.get(url, {withCredentials: true}).then((res) => setMyBookings(res.data));
   }, [url]);
@@ -50,12 +50,12 @@ const MyBookings = () => {
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.isConfirmed) {
-          axios.delete(`http://localhost:5000/bookedRooms/${id}`).then((res) => {
+          axios.delete(`https://b9a11-server-side-atique-shahriar.vercel.app/bookedRooms/${id}`).then((res) => {
             console.log(res.data);
             if (res.data.deletedCount > 0) {
               console.log(roomId);
               axios
-                .put(`http://localhost:5000/room/${roomId}`, {
+                .put(`https://b9a11-server-side-atique-shahriar.vercel.app/room/${roomId}`, {
                   isAvailable: true,
                 })
                 .then((res) => {
