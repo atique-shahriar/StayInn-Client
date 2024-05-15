@@ -1,31 +1,57 @@
 import axios from "axios";
 import { PropTypes } from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const RoomCard = ({room}) => {
-  const {_id, image, price_per_night, availability} = room;
-  const [roomInfo, setRoomInfo] = useState();
-
-  useState(() => {
-    axios.get(`https://b9a11-server-side-atique-shahriar.vercel.app/room/${_id}`).then((res) => {
-      setRoomInfo(res.data);
-    });
+  const {_id} = room;
+  const [roomInfo, setRoomInfo] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`https://b9a11-server-side-atique-shahriar.vercel.app/room/${_id}`)
+      .then((res) => {
+        setRoomInfo(res.data);
+      });
   }, []);
 
+  const {name, image, price_per_night, availability} = roomInfo;
   return (
-    <div className="p-4 border border-[#F6BC1C] rounded-lg">
+    <div className="p-4 border border-[#e8f5ff] rounded-lg shadow-md shadow-orange-100">
       <Link to={`/roomdetails/${_id}`}>
-        <div className=" rounded-xl flex relative tooltip" data-tip="Click for details">
-          <img src={image} alt="" className="h-[250px] w-full shadow-md rounded-lg " />
-          <span className="text-base text-white px-6 rounded-ss-lg font-semibold absolute bg-gray-900 bg-opacity-60">
+        <div
+          className=" rounded-xl flex relative tooltip"
+          data-tip="Click for details"
+        >
+          <img
+            src={image}
+            alt=""
+            className="h-[250px] w-full shadow-md rounded-lg "
+          />
+          <span className="text-base text-white px-8 rounded-ss-lg font-semibold absolute bg-gray-900 bg-opacity-60">
             ${price_per_night}
             <span className="text-sm">/night</span>
           </span>
+          <span className=" text-white w-full top-1/2 py-4 -translate-y-1/2 text-lg font-semibold absolute  bg-[#199DFF] bg-opacity-60">
+            {name}
+          </span>
         </div>
-        <div className="flex gap-4 justify-center mt-2">
-          <p className=" bg-gray-200 w-fit px-4 rounded-md text-sm text-[#FF7B19]">Reviewed by {roomInfo?.reviews?.length > 0 ? roomInfo?.reviews?.length : "0"}</p>
-          <p className=" bg-gray-200 w-fit px-4 rounded-md text-sm text-[#FF7B19]">{availability ? "Available" : "Not Available"}</p>
+        <div className="flex justify-center gap-4 my-2">
+          <span
+            className="px-2 font-medium bg-[#ceeaff] rounded-lg text-sm
+              text-gray-600"
+          >
+            Reviewed by{" "}
+            {roomInfo?.reviews?.length > 0 ? roomInfo?.reviews?.length : "0"}
+          </span>
+          <span className=" font-medium text-sm text-gray-600">
+            {availability ? (
+              <span className="bg-[#ceeaff] rounded-lg px-2">Available</span>
+            ) : (
+              <span className="bg-[#ffc2b5] rounded-lg px-2">
+                Not Available
+              </span>
+            )}
+          </span>
         </div>
       </Link>
     </div>

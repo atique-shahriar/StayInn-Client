@@ -9,7 +9,7 @@ const Home = () => {
   window.addEventListener("load", function () {
     setTimeout(function () {
       document.getElementById("popup_1").showModal();
-    }, 2000);
+    }, 5000);
   });
 
   return (

@@ -1,24 +1,24 @@
-import { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Newsletter = () => {
-  const [email, setEmail] = useState("");
-  const [isEmailValid, setIsEmailValid] = useState(true);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const subName = e.target.name.value;
+    const subEmail = e.target.email.value;
+    const user = {subEmail, subName};
 
-  function handleInput(event) {
-    setEmail(event.target.value);
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-
-    if (email === "" || !/\S+@\S+\.\S+/.test(email)) {
-      setIsEmailValid(false);
+    if (subEmail == "" || !/\S+@\S+\.\S+/.test(subEmail)) {
+      toast.error(`Provide valid email ${subEmail}`);
     } else {
-      setIsEmailValid(true);
-      alert(`Thank you for subscribing with ${email}`);
-      setEmail("");
+      toast.success(`Thank you for subscribing with ${subEmail}`);
+      axios(
+        "https://b9a11-server-side-atique-shahriar.vercel.app/subscribers",
+        user
+      ).then((res) => console.log(res.data));
     }
-  }
+  };
+
   return (
     <div className="w-11/12 lg:w-4/5 mx-auto my-10 space-y-8">
       <div className="text-center space-y-4 flex flex-col items-center">
@@ -40,14 +40,13 @@ const Newsletter = () => {
           <p className="mb-4 text-center md:text-justify">
             Sign up to get access and grab 15% off your first bookings.
           </p>
-          {!isEmailValid ? <p>Please enter a valid email address</p> : null}
+
           <form onSubmit={handleSubmit}>
             <input
               type="text"
               className="block my-3 w-full md:w-4/5"
               placeholder="Write your name"
-              value={email}
-              onChange={handleInput}
+              name="name"
               style={{
                 padding: "10px",
                 fontSize: "16px",
@@ -59,8 +58,7 @@ const Newsletter = () => {
               type="email"
               className="block w-full md:w-4/5"
               placeholder="Write your email address"
-              value={email}
-              onChange={handleInput}
+              name="email"
               style={{
                 padding: "10px",
                 fontSize: "16px",
@@ -68,12 +66,11 @@ const Newsletter = () => {
                 borderRadius: "5px",
               }}
             />
-            <button
-              className="w-full md:w-4/5 p-[6px] mt-3 border-2 rounded-lg text-lg font-medium text-[#199DFF] border-[#199DFF] hover:bg-[#199DFF] hover:text-white"
+            <input
               type="submit"
-            >
-              Subscribe
-            </button>
+              value="Subscribe"
+              className="w-full md:w-4/5 p-[6px] mt-3 border-2 rounded-lg text-lg font-medium text-[#199DFF] border-[#199DFF] hover:bg-[#199DFF] hover:text-white"
+            />
           </form>
         </div>
       </div>
