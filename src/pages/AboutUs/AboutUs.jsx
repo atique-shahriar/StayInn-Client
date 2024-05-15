@@ -1,8 +1,12 @@
 import { Zoom } from "react-awesome-reveal";
+import { Helmet } from "react-helmet";
 
 const AboutUs = () => {
   return (
     <div className="">
+      <Helmet>
+        <title>Stay Inn | About Us</title>
+      </Helmet>
       <Zoom>
         {" "}
         <header className="bg-slate-800 text-white py-4">

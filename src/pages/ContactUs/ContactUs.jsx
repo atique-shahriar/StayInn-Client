@@ -1,10 +1,14 @@
 import { Zoom } from "react-awesome-reveal";
+import { Helmet } from "react-helmet";
 import { MdPhoneInTalk } from "react-icons/md";
 import { RiCustomerService2Fill } from "react-icons/ri";
 
 const ContactUs = () => {
   return (
     <div>
+      <Helmet>
+        <title>Stay Inn | Contact Us</title>
+      </Helmet>
       <Zoom>
         <header className="bg-slate-800 text-white py-4">
           <h1 className="text-3xl font-bold text-center">Contact Us</h1>
