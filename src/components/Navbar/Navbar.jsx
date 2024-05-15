@@ -100,6 +100,25 @@ const Navbar = () => {
           About Us
         </NavLink>
       </li>
+      <li>
+        <NavLink
+          to="/contactus"
+          className="hover:bg-transparent py-2 px-2 active:bg-transparent"
+          style={({isActive}) => {
+            return isActive
+              ? {
+                  color: "#FF7B19",
+                  borderBottom: "3px solid #FF7B19",
+                  background: "white",
+                  borderRadius: "0px",
+                  fontWeight: "700",
+                }
+              : {};
+          }}
+        >
+          Contact Us
+        </NavLink>
+      </li>
     </>
   );
 
