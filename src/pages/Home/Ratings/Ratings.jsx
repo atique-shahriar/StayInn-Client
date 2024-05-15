@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { RiDoubleQuotesL, RiDoubleQuotesR } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
@@ -50,22 +49,22 @@ const Ratings = () => {
           {allRatings.map((rating) => (
             <SwiperSlide key={rating._id}>
               <div className="flex justify-center items-center gap-6 px-4 md:px-8  min-h-[200px]">
-                <div>
+                <div className="w-[100px]">
                   <img
                     src={rating.userPhoto}
                     alt=""
-                    className="w-24 h-24 rounded-[100%] border-white border-4"
+                    className=" rounded-[100%] border-white border-4"
                   />
                 </div>
-                <div className="text-left space-y-1">
+                <div className="text-left space-y-1 w-[300px]">
                   <h3 className="text-ll font-bold">{rating.name}</h3>
                   <p className="text-xs">{rating.dateTime}</p>
                   <p className="text-xs">{rating.roomType}</p>
                   <hr className=""></hr>
                   <p className="flex gap-2">
-                    <RiDoubleQuotesL />
+                    &ldquo;
                     {rating.comment}
-                    <RiDoubleQuotesR />
+                    &rdquo;
                   </p>
                   <p className="text-amber-400 flex justify-between items-center">
                     <div>

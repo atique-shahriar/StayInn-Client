@@ -4,8 +4,8 @@ const Footer = () => {
       <footer className="w-11/12 md:w-4/5 mx-auto py-8 flex flex-col md:flex-row justify-between items-center gap-8">
         <aside className="flex flex-col md:items-start md:w-1/4">
           <div className="flex flex-col items-center">
-            <img src="logo.png" alt="" className="w-28" />
-            <p className="text-3xl font-extrabold -mt-2 custom-font bg-gradient-to-r from-[#FF7B19] to-[#199DFF] bg-clip-text text-transparent">
+            <img src="logo.png" alt="" className="w-36" />
+            <p className="text-5xl font-extrabold -mt-2 custom-font bg-gradient-to-r from-[#FF7B19] to-[#199DFF] bg-clip-text text-transparent">
               Stay Inn
             </p>
           </div>

@@ -12,11 +12,20 @@ const RoomDetails = () => {
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState(new Date());
   const [booked, setBooked] = useState();
-  const {_id, image, description, price_per_night, size, availability, reviews} = roomInfo;
+  const {
+    _id,
+    image,
+    name,
+    description,
+    price_per_night,
+    availability,
+    reviews,
+    special_offers,
+  } = roomInfo;
   const {user} = useContext(AuthContext);
 
   const handleBooked = () => {
-    toast.error("Room is already booked. Sorry!");
+    toast.error("This room is already booked. Sorry!");
   };
 
   const handleSubmitData = (e) => {
@@ -65,13 +74,26 @@ const RoomDetails = () => {
   };
 
   const handleBookedRoom = () => {
-    axios.post("https://b9a11-server-side-atique-shahriar.vercel.app/bookedRooms", booked).then((res) => {
-      console.log(res.data);
-      toast.success("Booked the room");
-      axios.put(`https://b9a11-server-side-atique-shahriar.vercel.app/room/${_id}`, {isAvailable: false}).then((res) => {
+    axios
+      .post(
+        "https://b9a11-server-side-atique-shahriar.vercel.app/bookedRooms",
+        booked
+      )
+      .then((res) => {
         console.log(res.data);
+        toast.success("Booked the room");
+        setTimeout(() => {
+          navigate("/mybookings");
+        }, 1000);
+        axios
+          .put(
+            `https://b9a11-server-side-atique-shahriar.vercel.app/room/${_id}`,
+            {isAvailable: false}
+          )
+          .then((res) => {
+            console.log(res.data);
+          });
       });
-    });
   };
 
   const handleDeleteBooked = () => {
@@ -80,25 +102,40 @@ const RoomDetails = () => {
 
   return (
     <div>
-      <dialog id="my_modal_1" className="modal">
+      <dialog id="my_modal_1" className="modal ">
         <div className="modal-box" method="dialog">
           {booked ? (
             <>
-              <div>
-                <img src={image} alt="" />
+              <div className="flex items-center justify-center">
+                <img src={image} alt="" className=" rounded-lg w-3/4" />
               </div>
-              <div>
-                {price_per_night} {size}
+              <div className="flex flex-col items-center">
+                <div className="text-xl mt-2 font-medium">{name}</div>
+                <div className="text-base font-medium">
+                  Price:{" "}
+                  <span className="text-[#FF3811]">${price_per_night}</span>
+                </div>
+                <div className="text-sm">MM/DD/YYYY: {booked.date}</div>
+                <div className="text-center mt-2">
+                  If you want to book click on{" "}
+                  <span className="text-[#199DFF] font-bold">Confirm</span>{" "}
+                  Button. Otherwise{" "}
+                  <span className="text-[#FF3811] font-bold">Cancel.</span>
+                </div>
               </div>
-              <div>{description}</div>
-              <div>{booked.date}</div>
               <div className="w-full flex justify-center">
                 <div className="modal-action">
                   <form method="dialog">
-                    <button className="btn" onClick={handleDeleteBooked}>
+                    <button
+                      className="px-6 text-white bg-[#ff3811] py-2 border-[#ff3811] border-2 font-medium rounded-lg       hover:border-[#ff3811] mr-4 hover:text-[#ff3811] hover:bg-white hover:bg-opacity-10"
+                      onClick={handleDeleteBooked}
+                    >
                       Cancel
                     </button>
-                    <button className="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={handleBookedRoom}>
+                    <button
+                      className="px-6 text-white hover:text-[#199DFF] bg-[#199DFF] py-2 border-[#199DFF] border-2 font-medium rounded-lg     hover:border-[#199DFF] hover:bg-white hover:bg-opacity-10 ml-4"
+                      onClick={handleBookedRoom}
+                    >
                       Confirm
                     </button>
                   </form>
@@ -107,37 +144,90 @@ const RoomDetails = () => {
             </>
           ) : (
             <>
-              <form onSubmit={handleSubmitData} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+              <form
+                onSubmit={handleSubmitData}
+                className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+              >
                 <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
-                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="name" defaultValue={user?.displayName} placeholder="Enter your name" />
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Name
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type="text"
+                    name="name"
+                    defaultValue={user?.displayName}
+                    placeholder="Enter your name"
+                  />
                 </div>
                 <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="email" name="email" defaultValue={user?.email} placeholder="Enter your email" />
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Email
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    type="email"
+                    name="email"
+                    defaultValue={user?.email}
+                    placeholder="Enter your email"
+                  />
                 </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">Room Type</label>
-                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="roomType" disabled defaultValue={size} placeholder="Enter room type" />
+                <div className="mb-4 flex gap-4">
+                  <div className="w-3/4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                      Room
+                    </label>
+                    <input
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      type="text"
+                      name="roomType"
+                      disabled
+                      defaultValue={name}
+                      placeholder="Enter room type"
+                    />
+                  </div>
+
+                  <div className="">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                      Price
+                    </label>
+                    <input
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      type="number"
+                      name="price"
+                      disabled
+                      defaultValue={price_per_night}
+                      placeholder="Enter price"
+                    />
+                  </div>
                 </div>
+
                 <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">Price</label>
-                  <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="number" name="price" disabled defaultValue={price_per_night} placeholder="Enter price" />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">Date</label>
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Date
+                  </label>
                   <div className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+                    <DatePicker
+                      selected={startDate}
+                      onChange={(date) => setStartDate(date)}
+                    />
                   </div>
                 </div>
                 <div className="w-full flex justify-center">
-                  <input className="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" value="Submit" />
+                  <input
+                    className="px-6 text-white hover:text-[#199DFF] bg-[#199DFF] py-2 border-[#199DFF] border-2 font-medium rounded-lg     hover:border-[#199DFF] hover:bg-white hover:bg-opacity-10"
+                    type="submit"
+                    value="Submit"
+                  />
                 </div>
               </form>
               <div className="modal-action">
                 <form method="dialog">
-                  <button className="btn" onClick={handleDeleteBooked}>
-                    Cancel
+                  <button
+                    className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                    onClick={handleDeleteBooked}
+                  >
+                    ✕
                   </button>
                 </form>
               </div>
@@ -159,45 +249,84 @@ const RoomDetails = () => {
         </div>
       </div>
       <div className="w-11/12 md:w-4/5 mx-auto my-12 ">
-        <div className="flex items-center ">
-          <div>
-            <img src={image} alt="" className="w-3/4 flex items-center justify-center" />
+        <h3 className="font-bold text-3xl text-center text-[#199DFF] mb-8">
+          {name}
+        </h3>
+        <div className="flex items-center gap-4 md:gap-20 flex-col md:flex-row">
+          <div className="flex flex-1  justify-end">
+            <img
+              src={image}
+              alt=""
+              className=" lg:max-w-[450px] flex items-center justify-center shadow-lg rounded-lg"
+            />
           </div>
-          <div className="space-y-2">
-            <h3 className="font-bold text-3xl">{size} Room</h3>
-            <p className="font-bold text-base text-[#FF7B19]">Price: ${price_per_night}/night</p>
-            <p className="font-bold text-base text-[#FF7B19]">Review: {reviews.length > 0 ? reviews.length : "Currently no review availabe"}</p>
-            <p className="pb-6">{description}</p>
+          <div className="space-y-2 flex flex-col flex-1 justify-center ">
+            <h3 className="font-bold text-3xl"></h3>
+            <p className="font-medium text-xl ">
+              Price: ${price_per_night}
+              <span className="text-sm">/night.</span>
+            </p>
+            <p className="font-medium text-base">
+              Review:{" "}
+              {reviews.length > 0 ? (
+                reviews.length
+              ) : (
+                <span className="text-[#FF3811]">
+                  No review available right now.
+                </span>
+              )}
+            </p>
+            <p className="pb-6 text-justify">
+              <span className="font-medium">Details: </span>
+              {description}
+            </p>
 
             {availability ? (
               <div>
-                <span className="text-[#199DFF] font-bold text-base mr-4">AVAILABLE</span>
+                <span className="text-[#199DFF] font-bold text-base mr-4">
+                  AVAILABLE
+                </span>
 
-                <Link onClick={() => handleBookNow()} className="bg-gradient-to-br from-[#FF7B19] to-[#FFCE32] hover:bg-gradient-to-bl py-2 px-6 font-bold text-white text-center">
+                <Link
+                  onClick={() => handleBookNow()}
+                  className="px-6 text-white hover:text-[#199DFF] bg-[#199DFF] py-2 border-[#199DFF] border-2 font-medium rounded-lg     hover:border-[#199DFF] hover:bg-white hover:bg-opacity-10"
+                >
                   Book Now
                 </Link>
               </div>
             ) : (
               <div>
-                <span className="text-[#FF7B19] font-bold text-base mr-4">UNAVAILABLE</span>
-                <Link onClick={handleBooked} className="bg-gray-600  py-2 px-6 font-bold text-white text-center disabled">
+                <span className="text-[#FF3811] font-bold text-base mr-4">
+                  UNAVAILABLE
+                </span>
+                <Link
+                  onClick={handleBooked}
+                  className="px-6 text-white bg-gray-800 py-2 border-gray-800 border-2 font-medium rounded-lg disabled"
+                >
                   Booked
                 </Link>
               </div>
             )}
+            <div className="pt-4">
+              <h4 className="font-medium text-lg">
+                {special_offers[0]} | {special_offers[1]}
+              </h4>
+            </div>
           </div>
         </div>
 
         <div>
           {reviews.length > 0 ? (
             <div>
-              <div className="text-center space-y-4 flex flex-col items-center py-10 ">
-                <h3 className="text-3xl font-bold text-[#3672B7]">All reviews for this room</h3>
+              <div className="text-center space-y-4 flex flex-col items-center py-4 mt-16">
+                <h3 className="text-xl font-bold text-[#FF3811]">
+                  Review for {name}
+                </h3>
               </div>
               <div className="overflow-x-auto">
                 <table className="table">
                   <thead>
-                    <tr className="bg-[#bbe8f2] text-black">
+                    <tr className="bg-[#c5e6ff] text-sm text-black">
                       <th>Name</th>
                       <th>Review</th>
                       <th>Review Time</th>
@@ -205,11 +334,15 @@ const RoomDetails = () => {
                   </thead>
                   <tbody>
                     {reviews.map((review) => (
-                      <tr key={review._id}>
-                        <td>{review.name}</td>
+                      <tr key={review._id} className="text-base">
+                        <td className="font-medium">{review.name}</td>
                         <td>
+                          <span className="font-medium">Comment:</span>{" "}
                           {review.comment} <br />{" "}
-                          <div className="text-amber-400 text-base">
+                          <div className="text-amber-400 text-base mt-1 flex items-center gap-2">
+                            <span className="font-medium text-black">
+                              Ratings:
+                            </span>{" "}
                             {review.ratings == 1 ? (
                               <div className="flex gap-1">
                                 <FaStar />
