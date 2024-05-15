@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { IoIosArrowDropleft } from "react-icons/io";
 import { Link } from "react-router-dom";
 import RoomCard from "./RoomCard";
@@ -55,6 +56,9 @@ const Rooms = () => {
 
   return (
     <div className="w-11/12 md:w-4/5 mx-auto py-4">
+      <Helmet>
+        <title>Stay Inn | Room</title>
+      </Helmet>
       <div className="text-center space-y-4 flex flex-col items-center">
         <h3 className="text-3xl font-bold  text-[#3672B7]">
           Explore our available accommodations.

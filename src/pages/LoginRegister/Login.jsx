@@ -1,6 +1,7 @@
 import axios from "axios";
 import { GoogleAuthProvider } from "firebase/auth";
 import { useContext } from "react";
+import { Helmet } from "react-helmet";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -26,7 +27,11 @@ const Login = () => {
         const user = {email};
 
         axios
-          .post("https://b9a11-server-side-atique-shahriar.vercel.app/jwt", user, {withCredentials: true})
+          .post(
+            "https://b9a11-server-side-atique-shahriar.vercel.app/jwt",
+            user,
+            {withCredentials: true}
+          )
           .then((res) => {
             console.log(res.data);
             if (res.data.success) {
@@ -84,6 +89,9 @@ const Login = () => {
 
   return (
     <div className="w-11/12 md:w-4/5 mx-auto py-10">
+      <Helmet>
+        <title>Stay Inn | Login</title>
+      </Helmet>
       <div className="grid md:grid-cols-2 gap-10">
         <div className=" hidden md:block ">
           <div className="flex justify-center items-center  h-full">

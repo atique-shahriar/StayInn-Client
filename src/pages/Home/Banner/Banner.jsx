@@ -1,8 +1,9 @@
+import "animate.css";
 import { Link } from "react-router-dom";
 
 const Banner = () => {
   return (
-    <div className="w-11/12 md:w-4/5 mx-auto py-4">
+    <div className="w-11/12 md:w-4/5 mx-auto py-4 animate__animated animate__fadeIn">
       <div className="carousel w-full">
         <div id="slide1" className="carousel-item relative w-full">
           <img

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useContext } from "react";
+import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../components/AuthProvider/AuthProvider";
@@ -73,6 +74,9 @@ const Register = () => {
 
   return (
     <div className="w-11/12 md:w-4/5 mx-auto py-10">
+      <Helmet>
+        <title>Stay Inn | Register</title>
+      </Helmet>
       <div className="grid md:grid-cols-2 gap-10">
         <div className=" hidden md:block ">
           <div className="flex justify-center items-center  h-full">

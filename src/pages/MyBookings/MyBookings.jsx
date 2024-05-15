@@ -5,6 +5,8 @@ import { FaEdit, FaRegStar } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import { AuthContext } from "../../components/AuthProvider/AuthProvider";
 
+import { Zoom } from "react-awesome-reveal";
+import { Helmet } from "react-helmet";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import RatingModal from "./RatingModal";
@@ -104,6 +106,9 @@ const MyBookings = () => {
 
   return (
     <div className="shadow-lg mb-1">
+      <Helmet>
+        <title>Stay Inn | Booking</title>
+      </Helmet>
       {/* For updating date */}
       <dialog id="updateDateModal" className="modal">
         <UpdateModal updateBook={updateBook}></UpdateModal>
@@ -118,61 +123,63 @@ const MyBookings = () => {
         <div className="text-center space-y-4 flex flex-col items-center py-10 ">
           <h3 className="text-3xl font-bold text-[#199DFF]">My Booking List</h3>
         </div>
-        <div className="overflow-x-auto">
-          <table className="table">
-            <thead>
-              <tr className="bg-[#c6e6ff] text-black text-sm">
-                <th>Image</th>
-                <th>Room</th>
-                <th className="hidden md:block">Price</th>
-                <th>Booked Date</th>
-                <th>Update</th>
-                <th>Delete</th>
-                <th>Post Review</th>
-              </tr>
-            </thead>
-            <tbody>
-              {myBookings.map((myBooking) => (
-                <tr key={myBooking._id}>
-                  <td>
-                    <img
-                      src={myBooking.image}
-                      alt=""
-                      className="w-24 h-18 rounded-lg shadow-lg"
-                    />
-                  </td>
-                  <td>{myBooking.roomType}</td>
-                  <td>${myBooking.price}</td>
-                  <td>{myBooking.date}</td>
-                  <td>
-                    <FaEdit
-                      onClick={() => handleUpdateDate(myBooking)}
-                      className="text-xl text-[#199DFF] hover:text-[#1079c9] hover:text-2xl"
-                    ></FaEdit>
-                  </td>
-                  <td>
-                    <MdDeleteForever
-                      onClick={() =>
-                        handleDelete(
-                          myBooking._id,
-                          myBooking.roomId,
-                          myBooking.date
-                        )
-                      }
-                      className="text-xl text-[#FF3811] hover:text-[#bd2f12] hover:text-2xl"
-                    ></MdDeleteForever>
-                  </td>
-                  <td>
-                    <FaRegStar
-                      onClick={() => handleReview(myBooking)}
-                      className="text-xl text-[#F6BC1C] hover:text-[#e4af1d] hover:text-2xl"
-                    ></FaRegStar>
-                  </td>
+        <Zoom>
+          <div className="overflow-x-auto">
+            <table className="table">
+              <thead>
+                <tr className="bg-[#c6e6ff] text-black text-sm">
+                  <th>Image</th>
+                  <th>Room</th>
+                  <th className="hidden md:block">Price</th>
+                  <th>Booked Date</th>
+                  <th>Update</th>
+                  <th>Delete</th>
+                  <th>Post Review</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {myBookings.map((myBooking) => (
+                  <tr key={myBooking._id}>
+                    <td>
+                      <img
+                        src={myBooking.image}
+                        alt=""
+                        className="w-24 h-18 rounded-lg shadow-lg"
+                      />
+                    </td>
+                    <td>{myBooking.roomType}</td>
+                    <td>${myBooking.price}</td>
+                    <td>{myBooking.date}</td>
+                    <td>
+                      <FaEdit
+                        onClick={() => handleUpdateDate(myBooking)}
+                        className="text-xl text-[#199DFF] hover:text-[#1079c9] hover:text-2xl"
+                      ></FaEdit>
+                    </td>
+                    <td>
+                      <MdDeleteForever
+                        onClick={() =>
+                          handleDelete(
+                            myBooking._id,
+                            myBooking.roomId,
+                            myBooking.date
+                          )
+                        }
+                        className="text-xl text-[#FF3811] hover:text-[#bd2f12] hover:text-2xl"
+                      ></MdDeleteForever>
+                    </td>
+                    <td>
+                      <FaRegStar
+                        onClick={() => handleReview(myBooking)}
+                        className="text-xl text-[#F6BC1C] hover:text-[#e4af1d] hover:text-2xl"
+                      ></FaRegStar>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Zoom>
       </div>
     </div>
   );

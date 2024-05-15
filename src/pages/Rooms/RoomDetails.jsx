@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Helmet } from "react-helmet";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import { Link, useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -102,6 +103,9 @@ const RoomDetails = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Stay Inn | Room</title>
+      </Helmet>
       <dialog id="my_modal_1" className="modal ">
         <div className="modal-box" method="dialog">
           {booked ? (

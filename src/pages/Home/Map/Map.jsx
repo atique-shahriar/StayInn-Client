@@ -3,7 +3,7 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
 const Map = () => {
   return (
-    <div className="w-10/12 lg:w-4/5 mx-auto my-10">
+    <div className="w-10/12 lg:w-4/5 mx-auto my-10 ">
       <div className="text-center space-y-4 flex flex-col items-center mb-6">
         <h3 className="text-3xl font-bold text-[#199DFF]">
           Explore Our Location
@@ -13,6 +13,7 @@ const Map = () => {
           vibrant surroundings of Coxs Bazar, Bangladesh.
         </p>
       </div>
+
       <MapContainer
         center={[21.4272, 92.0058]}
         zoom={15}
