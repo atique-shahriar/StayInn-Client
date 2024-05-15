@@ -5,7 +5,7 @@ const Footer = () => {
         <aside className="flex flex-col md:items-start md:w-1/4">
           <div className="flex flex-col items-center">
             <img src="logo.png" alt="" className="w-36" />
-            <p className="text-5xl font-extrabold -mt-2 custom-font bg-gradient-to-r from-[#FF7B19] to-[#199DFF] bg-clip-text text-transparent">
+            <p className="text-3xl font-extrabold -mt-2 custom-font bg-gradient-to-r from-[#FF7B19] to-[#199DFF] bg-clip-text text-transparent">
               Stay Inn
             </p>
           </div>

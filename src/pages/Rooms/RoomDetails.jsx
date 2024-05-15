@@ -224,7 +224,7 @@ const RoomDetails = () => {
               <div className="modal-action">
                 <form method="dialog">
                   <button
-                    className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                    className="btn btn-sm btn-circle bg-[#FF3811] text-white hover:text-black btn-ghost absolute right-2 top-2"
                     onClick={handleDeleteBooked}
                   >
                     ✕

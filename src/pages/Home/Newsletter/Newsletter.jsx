@@ -12,10 +12,12 @@ const Newsletter = () => {
       toast.error(`Provide valid email ${subEmail}`);
     } else {
       toast.success(`Thank you for subscribing with ${subEmail}`);
-      axios(
-        "https://b9a11-server-side-atique-shahriar.vercel.app/subscribers",
-        user
-      ).then((res) => console.log(res.data));
+      axios
+        .post(
+          "https://b9a11-server-side-atique-shahriar.vercel.app/subscribers",
+          user
+        )
+        .then((res) => console.log(res.data));
     }
   };
 
