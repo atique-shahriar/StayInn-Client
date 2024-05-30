@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GoogleAuthProvider } from "firebase/auth";
+import { FacebookAuthProvider, GoogleAuthProvider } from "firebase/auth";
 import { useContext } from "react";
 import { Helmet } from "react-helmet";
 import { FcGoogle } from "react-icons/fc";
@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { AuthContext } from "../../components/AuthProvider/AuthProvider";
 
 const Login = () => {
-  const {signInUser, signInGoogle} = useContext(AuthContext);
+  const {signInUser, signInGoogle, signInFacebook} = useContext(AuthContext);
   const location = useLocation();
   console.log(location);
   const navigate = useNavigate();
@@ -26,20 +26,14 @@ const Login = () => {
         toast.success("Logged in successfully");
         const user = {email};
 
-        axios
-          .post(
-            "https://b9a11-server-side-atique-shahriar.vercel.app/jwt",
-            user,
-            {withCredentials: true}
-          )
-          .then((res) => {
-            console.log(res.data);
-            if (res.data.success) {
-              setTimeout(() => {
-                navigate(location?.state ? location.state : "/");
-              }, 1000);
-            }
-          });
+        axios.post("https://b9a11-server-side-atique-shahriar.vercel.app/jwt", user, {withCredentials: true}).then((res) => {
+          console.log(res.data);
+          if (res.data.success) {
+            setTimeout(() => {
+              navigate(location?.state ? location.state : "/");
+            }, 1000);
+          }
+        });
       })
       .catch((error) => {
         console.log(error.message);
@@ -58,32 +52,55 @@ const Login = () => {
         const email = result.user.email;
         const photoURL = result.user.photoURL;
         const user = {displayName, email, photoURL};
-        axios
-          .post(
-            "https://b9a11-server-side-atique-shahriar.vercel.app/users",
-            user
-          )
-          .then((res) => {
-            console.log(res.data);
-          });
+        axios.post("https://b9a11-server-side-atique-shahriar.vercel.app/users", user).then((res) => {
+          console.log(res.data);
+        });
         const uEmail = {email};
-        axios
-          .post(
-            "https://b9a11-server-side-atique-shahriar.vercel.app/jwt",
-            uEmail,
-            {withCredentials: true}
-          )
-          .then((res) => {
-            console.log(res.data);
-            if (res.data.success) {
-              setTimeout(() => {
-                navigate(location?.state ? location.state : "/");
-              }, 1000);
-            }
-          });
+        axios.post("https://b9a11-server-side-atique-shahriar.vercel.app/jwt", uEmail, {withCredentials: true}).then((res) => {
+          console.log(res.data);
+          if (res.data.success) {
+            setTimeout(() => {
+              navigate(location?.state ? location.state : "/");
+            }, 1000);
+          }
+        });
       })
       .catch((error) => {
         console.log("Login with google  failed", error.message);
+      });
+  };
+
+  const handleFacebookSignIn = () => {
+    const provider = new FacebookAuthProvider();
+    signInFacebook(provider)
+      .then((result) => {
+        toast.success("Logged in successfully with Facebook");
+        const displayName = result.user.displayName;
+        let email = result.user.email;
+        const photoURL = result.user.photoURL;
+        if (!email) {
+          email = "root@gmail.com";
+          console.log(email);
+        }
+        const user = {displayName, email, photoURL};
+        console.log(user);
+        axios.post("https://b9a11-server-side-atique-shahriar.vercel.app/users", user).then((res) => {
+          console.log(res.data);
+        });
+
+        console.log(email);
+        const uEmail = {email};
+        axios.post("https://b9a11-server-side-atique-shahriar.vercel.app/jwt", uEmail, {withCredentials: true}).then((res) => {
+          console.log(res.data);
+          if (res.data.success) {
+            setTimeout(() => {
+              navigate(location?.state ? location.state : "/");
+            }, 1000);
+          }
+        });
+      })
+      .catch((error) => {
+        console.log(error.message);
       });
   };
 
@@ -95,15 +112,19 @@ const Login = () => {
       <div className="grid md:grid-cols-2 gap-10">
         <div className=" hidden md:block ">
           <div className="flex justify-center items-center  h-full">
-            <img src="./logo.png" alt="" className="lg:w-4/5" />
+            <img
+              src="./logo.png"
+              alt=""
+              className="lg:w-4/5"
+            />
           </div>
         </div>
         <div className=" border-2 border-gray-200 rounded-lg py-8 px-6 h-fit">
-          <h3 className="text-3xl font-bold text-[#199DFF] text-center mb-6">
-            Login
-          </h3>
+          <h3 className="text-3xl font-bold text-[#199DFF] text-center mb-6">Login</h3>
           <div>
-            <form className="space-y-4" onSubmit={handleSignIn}>
+            <form
+              className="space-y-4"
+              onSubmit={handleSignIn}>
               <div className="space-y-2">
                 <label>Email</label>
                 <input
@@ -137,10 +158,19 @@ const Login = () => {
             <p>Or login with</p>
             <div className="flex justify-center items-center gap-6 text-5xl hover:cursor-pointer">
               <FcGoogle onClick={handleGoogleSignIn}></FcGoogle>
+              <button onClick={handleFacebookSignIn}>
+                <img
+                  src="./fb.png"
+                  alt=""
+                  className="w-11"
+                />
+              </button>
             </div>
             <p>
               Don&apos;t have an account?{" "}
-              <Link to="/register" className="hover:text-[#FF3811]">
+              <Link
+                to="/register"
+                className="hover:text-[#FF3811]">
                 Create Account.
               </Link>
             </p>

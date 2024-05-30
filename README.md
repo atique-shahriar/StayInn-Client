@@ -1,6 +1,6 @@
 <h1>Stay Inn | Hotel Room Booking Platform</h1>
 <hr><br>
-<h3> Live Link:<a href="https://stayinn-3d14d.web.app/">Stay Inn</a>
+<h3> Live Link: <a href="https://stayinn-3d14d.web.app/"> Stay Inn</a>
 </h3><br>
 
 <h2>Website Features:</h2>
@@ -29,5 +29,3 @@
 <div>
     <h4>Helmet</h4><h4>Leaflet</h4><h4>Animation Library Aos</h4>
 </div>
-<br>
-<h3>Category: assignment_category_0004</h3>
