@@ -1,7 +1,11 @@
 <h1>Stay Inn | Hotel Room Booking Platform</h1>
-<hr><br>
+<hr>
 <h3> Live Link: <a href="https://stayinn-3d14d.web.app/"> Stay Inn</a>
-</h3><br>
+</h3>
+<h4>Tools & Technologies: React, Node, Express, MongoDB, Firebase, Swiper Slider, Helmet, Leaflet, Animation Library AOS
+
+
+</h4>
 
 <h2>Website Features:</h2>
 
@@ -25,7 +29,18 @@
 </li>
 
 <br>
-<h2>React Package:</h2>
-<div>
-    <h4>Helmet</h4><h4>Leaflet</h4><h4>Animation Library Aos</h4>
+
+<h2>Project Demo:</h2>
+
+<div style="text-align:center">
+    <img src="https://github.com/atiqueshahriarr/Stay-Inn-Client/blob/main/Stay-Inn-1.png?raw=true"
+        alt="project-screenshot" width="100%" height="100%">
+        <img src="https://github.com/atiqueshahriarr/Stay-Inn-Client/blob/main/Stay-Inn-2.png?raw=true"
+        alt="project-screenshot" width="100%" height="100%">
+        <img src="https://github.com/atiqueshahriarr/Stay-Inn-Client/blob/main/Stay-Inn-3.png?raw=true"
+        alt="project-screenshot" width="100%" height="100%">
+        <img src="https://github.com/atiqueshahriarr/Stay-Inn-Client/blob/main/Stay-Inn-4.png?raw=true"
+        alt="project-screenshot" width="100%" height="100%">
+    
 </div>
+
