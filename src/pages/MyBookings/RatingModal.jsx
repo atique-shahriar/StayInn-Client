@@ -36,14 +36,14 @@ const RatingModal = ({ratingBook}) => {
     console.log(bookedInfo);
     axios
       .post(
-        "https://b9a11-server-side-atique-shahriar.vercel.app/ratings",
+        "https://stay-inn-server.vercel.app/ratings",
         bookedInfo
       )
       .then((res) => {
         console.log(res.data);
         axios
           .put(
-            `https://b9a11-server-side-atique-shahriar.vercel.app/rooms/${roomId}`,
+            `https://stay-inn-server.vercel.app/rooms/${roomId}`,
             {bookedInfo}
           )
           .then((res) => console.log(res.data));

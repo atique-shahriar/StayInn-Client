@@ -15,7 +15,7 @@ const Navbar = () => {
     const email = user?.email;
     axios
       .post(
-        "https://b9a11-server-side-atique-shahriar.vercel.app/jwtLogout",
+        "https://stay-inn-server.vercel.app/jwtLogout",
         {email},
         {withCredentials: true}
       )

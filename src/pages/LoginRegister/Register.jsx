@@ -42,7 +42,7 @@ const Register = () => {
         toast.success("Successfully Registered");
         axios
           .post(
-            "https://b9a11-server-side-atique-shahriar.vercel.app/jwt",
+            "https://stay-inn-server.vercel.app/jwt",
             {email},
             {withCredentials: true}
           )
@@ -59,7 +59,7 @@ const Register = () => {
         const user = {name, email, photoUrl};
         axios
           .post(
-            "https://b9a11-server-side-atique-shahriar.vercel.app/users",
+            "https://stay-inn-server.vercel.app/users",
             user
           )
           .then((res) => {

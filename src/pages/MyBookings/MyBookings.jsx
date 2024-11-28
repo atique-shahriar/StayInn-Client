@@ -18,12 +18,11 @@ const MyBookings = () => {
   // const {email} = user;
   const [myBookings, setMyBookings] = useState([]);
   // const bookings = allBookedRoom.filter((room) => room.mail == email);
+  console.log(user.email);
 
-  const url = `https://b9a11-server-side-atique-shahriar.vercel.app/book?email=${user?.email}`;
+  const url = `https://stay-inn-server.vercel.app/book/${user.email}`;
   useEffect(() => {
-    axios
-      .get(url, {withCredentials: true})
-      .then((res) => setMyBookings(res.data));
+    axios.get(url, {withCredentials: true}).then((res) => setMyBookings(res.data));
   }, [url]);
 
   console.log(myBookings);
@@ -54,43 +53,32 @@ const MyBookings = () => {
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.isConfirmed) {
-          axios
-            .delete(
-              `https://b9a11-server-side-atique-shahriar.vercel.app/bookedRooms/${id}`
-            )
-            .then((res) => {
-              console.log(res.data);
-              if (res.data.deletedCount > 0) {
-                console.log(roomId);
-                axios
-                  .put(
-                    `https://b9a11-server-side-atique-shahriar.vercel.app/room/${roomId}`,
-                    {
-                      isAvailable: true,
-                    }
-                  )
-                  .then((res) => {
-                    console.log(res.data);
-                  });
-
-                console.log("Deleted Successfully");
-                Swal.fire({
-                  title: "Deleted!",
-                  text: "Your room has been deleted.",
-                  icon: "success",
+          axios.delete(`https://stay-inn-server.vercel.app/bookedRooms/${id}`).then((res) => {
+            console.log(res.data);
+            if (res.data.deletedCount > 0) {
+              console.log(roomId);
+              axios
+                .put(`https://stay-inn-server.vercel.app/room/${roomId}`, {
+                  isAvailable: true,
+                })
+                .then((res) => {
+                  console.log(res.data);
                 });
-                const remainingBookedRooms = myBookings.filter(
-                  (myBooking) => myBooking._id != id
-                );
-                setMyBookings(remainingBookedRooms);
-              }
-            });
+
+              console.log("Deleted Successfully");
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your room has been deleted.",
+                icon: "success",
+              });
+              const remainingBookedRooms = myBookings.filter((myBooking) => myBooking._id != id);
+              setMyBookings(remainingBookedRooms);
+            }
+          });
         }
       });
     } else {
-      toast.warn(
-        "You have to delete your booking minimum one day before booked date."
-      );
+      toast.warn("You have to delete your booking minimum one day before booked date.");
     }
   };
 
@@ -110,12 +98,16 @@ const MyBookings = () => {
         <title>Stay Inn | Booking</title>
       </Helmet>
       {/* For updating date */}
-      <dialog id="updateDateModal" className="modal">
+      <dialog
+        id="updateDateModal"
+        className="modal">
         <UpdateModal updateBook={updateBook}></UpdateModal>
       </dialog>
 
       {/* For give ratings */}
-      <dialog id="ratingModal" className="modal">
+      <dialog
+        id="ratingModal"
+        className="modal">
         <RatingModal ratingBook={ratingBook}></RatingModal>
       </dialog>
 
@@ -153,26 +145,17 @@ const MyBookings = () => {
                     <td>
                       <FaEdit
                         onClick={() => handleUpdateDate(myBooking)}
-                        className="text-xl text-[#199DFF] hover:text-[#1079c9] hover:text-2xl"
-                      ></FaEdit>
+                        className="text-xl text-[#199DFF] hover:text-[#1079c9] hover:text-2xl"></FaEdit>
                     </td>
                     <td>
                       <MdDeleteForever
-                        onClick={() =>
-                          handleDelete(
-                            myBooking._id,
-                            myBooking.roomId,
-                            myBooking.date
-                          )
-                        }
-                        className="text-xl text-[#FF3811] hover:text-[#bd2f12] hover:text-2xl"
-                      ></MdDeleteForever>
+                        onClick={() => handleDelete(myBooking._id, myBooking.roomId, myBooking.date)}
+                        className="text-xl text-[#FF3811] hover:text-[#bd2f12] hover:text-2xl"></MdDeleteForever>
                     </td>
                     <td>
                       <FaRegStar
                         onClick={() => handleReview(myBooking)}
-                        className="text-xl text-[#F6BC1C] hover:text-[#e4af1d] hover:text-2xl"
-                      ></FaRegStar>
+                        className="text-xl text-[#F6BC1C] hover:text-[#e4af1d] hover:text-2xl"></FaRegStar>
                     </td>
                   </tr>
                 ))}

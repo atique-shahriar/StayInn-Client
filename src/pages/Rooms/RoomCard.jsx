@@ -9,7 +9,7 @@ const RoomCard = ({room}) => {
   const [roomInfo, setRoomInfo] = useState([]);
   useEffect(() => {
     axios
-      .get(`https://b9a11-server-side-atique-shahriar.vercel.app/room/${_id}`)
+      .get(`https://stay-inn-server.vercel.app/room/${_id}`)
       .then((res) => {
         setRoomInfo(res.data);
       });

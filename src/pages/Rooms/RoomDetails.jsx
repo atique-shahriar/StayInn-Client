@@ -77,7 +77,7 @@ const RoomDetails = () => {
   const handleBookedRoom = () => {
     axios
       .post(
-        "https://b9a11-server-side-atique-shahriar.vercel.app/bookedRooms",
+        "https://stay-inn-server.vercel.app/bookedRooms",
         booked
       )
       .then((res) => {
@@ -88,7 +88,7 @@ const RoomDetails = () => {
         }, 1000);
         axios
           .put(
-            `https://b9a11-server-side-atique-shahriar.vercel.app/room/${_id}`,
+            `https://stay-inn-server.vercel.app/room/${_id}`,
             {isAvailable: false}
           )
           .then((res) => {

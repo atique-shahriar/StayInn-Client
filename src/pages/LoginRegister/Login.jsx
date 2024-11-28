@@ -26,7 +26,7 @@ const Login = () => {
         toast.success("Logged in successfully");
         const user = {email};
 
-        axios.post("https://b9a11-server-side-atique-shahriar.vercel.app/jwt", user, {withCredentials: true}).then((res) => {
+        axios.post("https://stay-inn-server.vercel.app/jwt", user, {withCredentials: true}).then((res) => {
           console.log(res.data);
           if (res.data.success) {
             setTimeout(() => {
@@ -52,11 +52,11 @@ const Login = () => {
         const email = result.user.email;
         const photoURL = result.user.photoURL;
         const user = {displayName, email, photoURL};
-        axios.post("https://b9a11-server-side-atique-shahriar.vercel.app/users", user).then((res) => {
+        axios.post("https://stay-inn-server.vercel.app/users", user).then((res) => {
           console.log(res.data);
         });
         const uEmail = {email};
-        axios.post("https://b9a11-server-side-atique-shahriar.vercel.app/jwt", uEmail, {withCredentials: true}).then((res) => {
+        axios.post("https://stay-inn-server.vercel.app/jwt", uEmail, {withCredentials: true}).then((res) => {
           console.log(res.data);
           if (res.data.success) {
             setTimeout(() => {
@@ -84,13 +84,13 @@ const Login = () => {
         }
         const user = {displayName, email, photoURL};
         console.log(user);
-        axios.post("https://b9a11-server-side-atique-shahriar.vercel.app/users", user).then((res) => {
+        axios.post("https://stay-inn-server.vercel.app/users", user).then((res) => {
           console.log(res.data);
         });
 
         console.log(email);
         const uEmail = {email};
-        axios.post("https://b9a11-server-side-atique-shahriar.vercel.app/jwt", uEmail, {withCredentials: true}).then((res) => {
+        axios.post("https://stay-inn-server.vercel.app/jwt", uEmail, {withCredentials: true}).then((res) => {
           console.log(res.data);
           if (res.data.success) {
             setTimeout(() => {

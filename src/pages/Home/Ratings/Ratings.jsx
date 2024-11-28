@@ -15,7 +15,7 @@ const Ratings = () => {
   const [allRatings, setAllRatings] = useState([]);
   useEffect(() => {
     axios
-      .get("https://b9a11-server-side-atique-shahriar.vercel.app/ratingsAsc")
+      .get("https://stay-inn-server.vercel.app/ratingsAsc")
       .then((res) => {
         setAllRatings(res.data);
         console.log(res.data);

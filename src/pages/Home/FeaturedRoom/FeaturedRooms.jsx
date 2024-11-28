@@ -9,7 +9,7 @@ const FeaturedRooms = () => {
 
   useEffect(() => {
     axios
-      .get("https://b9a11-server-side-atique-shahriar.vercel.app/rooms")
+      .get("https://stay-inn-server.vercel.app/rooms")
       .then((res) => {
         console.log(res.data);
         setRooms(res.data);

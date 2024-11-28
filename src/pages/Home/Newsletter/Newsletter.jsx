@@ -15,7 +15,7 @@ const Newsletter = () => {
       toast.success(`Thank you for subscribing with ${subEmail}`);
       axios
         .post(
-          "https://b9a11-server-side-atique-shahriar.vercel.app/subscribers",
+          "https://stay-inn-server.vercel.app/subscribers",
           user
         )
         .then((res) => console.log(res.data));

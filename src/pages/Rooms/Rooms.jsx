@@ -9,7 +9,7 @@ const Rooms = () => {
   const [rooms, setRooms] = useState([]);
 
   // useEffect(() => {
-  //   axios.get(`https://b9a11-server-side-atique-shahriar.vercel.app/roomsAvailable/${"all"}`).then((res) => {
+  //   axios.get(`https://stay-inn-server.vercel.app/roomsAvailable/${"all"}`).then((res) => {
   //     setRooms(res.data);
   //     console.log(res.data);
   //   });
@@ -18,7 +18,7 @@ const Rooms = () => {
   useEffect(() => {
     axios
       .get(
-        `https://b9a11-server-side-atique-shahriar.vercel.app/roomsAll/${"all"}`
+        `https://stay-inn-server.vercel.app/roomsAll/${"all"}`
       )
       .then((res) => {
         setRooms(res.data);
@@ -32,7 +32,7 @@ const Rooms = () => {
     if (selected) {
       axios
         .get(
-          `https://b9a11-server-side-atique-shahriar.vercel.app/roomsAll/${selected}`
+          `https://stay-inn-server.vercel.app/roomsAll/${selected}`
         )
         .then((res) => {
           setRooms(res.data);
@@ -46,7 +46,7 @@ const Rooms = () => {
   //   console.log(selected);
   //   if (selected) {
   //     axios
-  //       .get(`https://b9a11-server-side-atique-shahriar.vercel.app/roomsAvailable/${selected}`)
+  //       .get(`https://stay-inn-server.vercel.app/roomsAvailable/${selected}`)
   //       .then((res) => {
   //         setRooms(res.data);
   //         console.log(res.data);

@@ -42,7 +42,7 @@ const router = createBrowserRouter([
         element: <RoomDetails></RoomDetails>,
         loader: ({params}) =>
           fetch(
-            `https://b9a11-server-side-atique-shahriar.vercel.app/room/${params.id}`
+            `https://stay-inn-server.vercel.app/room/${params.id}`
           ),
       },
 
@@ -54,7 +54,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         // loader: () =>
-        //   fetch("https://b9a11-server-side-atique-shahriar.vercel.app/bookedRooms", {credentials: "include"}),
+        //   fetch("https://stay-inn-server.vercel.app/bookedRooms", {credentials: "include"}),
       },
       {
         path: "/aboutus",
